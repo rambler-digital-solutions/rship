@@ -1,4 +1,6 @@
 # RSHIP
+[![Build Status](https://travis-ci.org/rambler-digital-solutions/rship.svg?branch=master)](https://travis-ci.org/rambler-digital-solutions/rship)
+[![NPM version](https://badge.fury.io/js/rship.svg)](https://badge.fury.io/js/rship)
 
 **RSHIP** *(Rocket Ship)* – simple and effective tool for developing and building isimorphic web application.
 
