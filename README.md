@@ -2,7 +2,7 @@
 
 RSHIP *(Rocket Ship)* – simple and effective tool for developing and building isimorphic web application.
 
-Current appilcation is **CLI** (Command Line Interface) wich avaliable from command ```$ rship```
+Current appilcation is **CLI** (Command Line Interface) which avaliable by ```$ rship```
 
 ## Install
 ```bash
@@ -35,7 +35,6 @@ Usage: rship [options] [command]
 
 
 ## Create application
-После установки RSHIP готов к созданию приложения
 ```bash
 $ rship new application_name # rship n applciation_name
 ```

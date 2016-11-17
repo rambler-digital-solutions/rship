@@ -4,7 +4,11 @@
   "description": "Ecosystem for building isomorphic web applications",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs:prepare": "gitbook install",
+    "docs:watch": "gitbook serve",
+    "docs:build": "rm -rf _book && gitbook build",
+    "docs:publish": "npm run docs:build && cd _book && git init && git commit --allow-empty -m 'Update docs' && git checkout -b gh-pages && git add . && git commit -am 'Update docs' && git push git@github.com:rambler-digital-solutions/rship.git gh-pages --force"
   },
   "author": "Michael Chernobrov <me@mrsum.ru> (http://mrsum.ru)",
   "license": "MIT",
@@ -25,6 +29,6 @@
     "memory-fs": "0.3.0",
     "webpack": "^1.13.2",
     "webpack-dev-server": "1.16.2",
-    "yarn": "^0.17.2"
+    "yarn": "0.17.2"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "root": "./docs",
+  "root": "/docs/",
   "title": "Rocket Ship",
-  "language": "ru"
+  "language": "en"
 }
