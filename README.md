@@ -4,7 +4,7 @@
 
 Current appilcation is **CLI** (Command Line Interface) which avaliable by ```$ rship```
 
-## [Installation](parts/install.md)
+## [Installation](docs/en/parts/install.md)
 ```bash
 $ npm i rship -g          # via npm
 $ yarn add rship --global # via yarn
@@ -53,13 +53,13 @@ Done in 13.07s.
 $ cd application_name
 ```
 
-## [Developing](parts/development.md)
+## [Developing](docs/en/parts/development.md)
 ```bash
 $ cd /Users/foo/code/application_folder
 $ rship run dev
 ```
 
-## [Building](parts/building.md)
+## [Building](docs/en/parts/building.md)
 ```bash
 $ cd /Users/foo/code/application_folder
 $ rship run build
