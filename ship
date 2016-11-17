@@ -1,0 +1,54 @@
+#!/usr/bin/env node
+
+// ======================
+// Depends
+// ======================
+const __ENV = process && process.env && process.env.NODE_ENV
+  ? process.env.NODE_ENV
+  : 'development';
+
+const colors = require('colors');
+const config = require('./config')(__dirname, process.cwd(),  __ENV);
+
+// ======================
+// SHIP logo
+// ======================
+const ship = [
+  '                                ',
+  '................................',
+  '..####...##..##..######..#####..',
+  '.##......##..##....##....##..##.',
+  '..####...######....##....#####..',
+  '.....##..##..##....##....##.....',
+  '..####...##..##..######..##.....',
+  '................................',
+].join('\n');
+
+
+// ======================
+// Check nodejs version
+// ======================
+if (process.versions.node.split('.').join('') <  config.requirments.node.split('.').join('')) {
+  process.stdout.write(colors.bold.red(ship + '\n'));
+  process.stdout.write(colors.bold.red('NodeJS version is outdated' + '\n'));
+  process.stdout.write('Minimal requirment version is: ' + colors.green.bold(config.requirments.node) + '\n\n');
+  process.exit(0);
+}
+
+// ======================
+// Initialize CLI
+// ======================
+const program = require('./cli/index')(
+  process.cwd(), __dirname, config
+);
+
+// ======================
+// Parse command arguments
+// ======================
+program.parse(process.argv);
+
+// ======================
+// if program was called
+// with no arguments, show help.
+// ======================
+if (program.args.length === 0) program.help();

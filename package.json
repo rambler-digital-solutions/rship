@@ -1,0 +1,30 @@
+{
+  "name": "rship",
+  "version": "0.0.7",
+  "description": "Ecosystem for building isomorphic web applications",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michael Chernobrov <me@mrsum.ru> (http://mrsum.ru)",
+  "license": "MIT",
+  "bin": {
+    "rship": "./ship"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-0",
+      "react"
+    ]
+  },
+  "dependencies": {
+    "blessed": "0.1.81",
+    "colors": "1.1.2",
+    "commander": "2.9.0",
+    "memory-fs": "0.3.0",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "1.16.2",
+    "yarn": "^0.17.2"
+  }
+}
