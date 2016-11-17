@@ -4,7 +4,7 @@ RSHIP *(Rocket Ship)* – simple and effective tool for developing and building
 
 Current appilcation is **CLI** (Command Line Interface) which avaliable by ```$ rship```
 
-## [Install](parts/install.html)
+## [Install](parts/install.md)
 ```bash
 $ npm i rship -g          # via npm
 $ yarn add rship --global # via yarn
@@ -53,12 +53,12 @@ Done in 13.07s.
 $ cd application_name
 ```
 
-## [Developing](parts/development.html)
+## [Developing](parts/development.md)
 ```bash
 $ rship run dev
 ```
 
-## [Building](parts/building.html)
+## [Building](parts/building.md)
 ```bash
 $ rship run build
 ```

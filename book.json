@@ -1,5 +1,16 @@
 {
   "root": "/docs/",
   "title": "Rocket Ship",
-  "language": "en"
+  "language": "en",
+  "plugins": ["disqus", "prism", "-highlight"],
+  "pluginsConfig": {
+    "disqus": {
+      "shortName": "rship"
+    },
+    "prism": {
+      "css": [
+        "prismjs/themes/prism-solarizedlight.css"
+      ]
+    }
+  }
 }

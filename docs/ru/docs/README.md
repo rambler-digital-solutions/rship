@@ -4,7 +4,7 @@ RSHIP *(Rocket Ship)* – простой и эффективный инстру
 
 Программа предоставляет собой **CLI** (Command Line Interface) доступный глобально через команду ```$ rship```
 
-## [Установка](parts/install.html)
+## [Установка](parts/install.md)
 ```bash
 $ npm i rship -g          # via npm
 $ yarn add rship --global # via yarn
@@ -53,12 +53,12 @@ Done in 13.07s.
 $ cd application_name
 ```
 
-## [Разработка](parts/development.html)
+## [Разработка](parts/development.md)
 ```bash
 $ rship run dev
 ```
 
-## [Сборка](parts/building.html)
+## [Сборка](parts/building.md)
 ```bash
 $ rship run build
 ```
