@@ -1,10 +1,10 @@
 # RSHIP
 
-RSHIP *(Rocket Ship)* – simple and effective tool for developing and building isimorphic web application.
+**RSHIP** *(Rocket Ship)* – simple and effective tool for developing and building isimorphic web application.
 
 Current appilcation is **CLI** (Command Line Interface) which avaliable by ```$ rship```
 
-## Install
+## [Installation](parts/install.md)
 ```bash
 $ npm i rship -g          # via npm
 $ yarn add rship --global # via yarn
@@ -35,6 +35,7 @@ Usage: rship [options] [command]
 
 
 ## Create application
+After install **RSHIP** is ready for creating application from [boilerplate](https://github.com/mrsum/rship-boilerplate)
 ```bash
 $ rship new application_name # rship n applciation_name
 ```
@@ -52,18 +53,21 @@ Done in 13.07s.
 $ cd application_name
 ```
 
-## Developing
+## [Developing](parts/development.md)
 ```bash
+$ cd /Users/foo/code/application_folder
 $ rship run dev
 ```
 
-## Building
+## [Building](parts/building.md)
 ```bash
+$ cd /Users/foo/code/application_folder
 $ rship run build
 ```
 
-## Install packages
+## Install package(s)
 ```bash
+$ cd /Users/foo/code/application_folder
 $ rship setup     # without node_modules folder remove
 ```
 ```bash
@@ -77,6 +81,7 @@ Done in 0.63s.
 ```
 
 ```bash
+$ cd /Users/foo/code/application_folder
 $ rship setup -f  # with node_modules folder remove
 ```
 ```bash
@@ -94,6 +99,7 @@ Done in 9.89s.
 
 ## Add package
 ```bash
+$ cd /Users/foo/code/application_folder
 $ rship install moment
 ```
 ```bash
@@ -112,6 +118,7 @@ Done in 5.01s.
 
 ## Remove package
 ```bash
+$ cd /Users/foo/code/application_folder
 $ rship remove moment
 ```
 ```bash
@@ -123,4 +130,4 @@ success Uninstalled packages.
 Done in 4.93s.
 ```
 
-##### MIT [Rambler Digital Solutions](https://github.com/rambler-digital-solutions/rship) (2016)
+##### MIT [Rambler Digital Solutions](https://github.com/rambler-digital-solutions) (2016)
