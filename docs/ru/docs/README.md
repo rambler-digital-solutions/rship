@@ -37,6 +37,7 @@ Usage: rship [options] [command]
 ## Создание приложения
 После установки RSHIP готов к созданию приложения
 ```bash
+$ cd /Users/foo/code/
 $ rship new application_name # rship n applciation_name
 ```
 ```bash
@@ -55,16 +56,19 @@ $ cd application_name
 
 ## [Разработка](parts/development.md)
 ```bash
+$ cd /Users/foo/code/application_folder
 $ rship run dev
 ```
 
 ## [Сборка](parts/building.md)
 ```bash
+$ cd /Users/foo/code/application_folder
 $ rship run build
 ```
 
 ## Установка пакетов
 ```bash
+$ cd /Users/foo/code/application_folder
 $ rship setup     # Без удаления папки node_modules
 ```
 ```bash
@@ -78,6 +82,7 @@ Done in 0.63s.
 ```
 
 ```bash
+$ cd /Users/foo/code/application_folder
 $ rship setup -f  # С удалением node_modules директории проекта
 ```
 ```bash
@@ -95,6 +100,7 @@ Done in 9.89s.
 
 ## Добавление пакета
 ```bash
+$ cd /Users/foo/code/application_folder
 $ rship install moment
 ```
 ```bash
@@ -113,6 +119,7 @@ Done in 5.01s.
 
 ## Удаление пакета
 ```bash
+$ cd /Users/foo/code/application_folder
 $ rship remove moment
 ```
 ```bash
