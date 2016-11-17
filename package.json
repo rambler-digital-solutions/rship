@@ -3,8 +3,11 @@
   "version": "0.0.8",
   "description": "Ecosystem for building isomorphic web applications",
   "main": "./cli/index.js",
+  "bin": {
+    "rship": "./ship"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "ci": "./node_modules/.bin/_mocha ./cli/__tests__/index.js",
     "docs:prepare": "gitbook install",
     "docs:watch": "gitbook serve",
     "docs:build": "rm -rf _book && gitbook build",
@@ -15,9 +18,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/rambler-digital-solutions/rship"
-  },
-  "bin": {
-    "rship": "./ship"
   },
   "babel": {
     "presets": [
@@ -34,5 +34,9 @@
     "webpack": "^1.13.2",
     "webpack-dev-server": "1.16.2",
     "yarn": "0.17.2"
+  },
+  "devDependencies": {
+    "chai": "3.5.0",
+    "mocha": "3.1.2"
   }
 }
