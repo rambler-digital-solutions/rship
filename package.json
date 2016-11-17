@@ -1,6 +1,6 @@
 {
   "name": "rship",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Ecosystem for building isomorphic web applications",
   "main": "index.js",
   "scripts": {

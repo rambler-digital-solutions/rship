@@ -24,7 +24,6 @@ const ship = [
   '................................',
 ].join('\n');
 
-
 // ======================
 // Check nodejs version
 // ======================
@@ -49,6 +48,6 @@ program.parse(process.argv);
 
 // ======================
 // if program was called
-// with no arguments, show help.
+// without arguments, show help.
 // ======================
 if (program.args.length === 0) program.help();
