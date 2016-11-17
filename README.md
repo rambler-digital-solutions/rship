@@ -4,7 +4,7 @@
 
 Current appilcation is **CLI** (Command Line Interface) which avaliable by ```$ rship```
 
-## [Installation](docs/en/parts/install.md)
+## [Installation](https://github.com/rambler-digital-solutions/rship/blob/master/docs/en/docs/parts/install.md)
 ```bash
 $ npm i rship -g          # via npm
 $ yarn add rship --global # via yarn
@@ -53,13 +53,13 @@ Done in 13.07s.
 $ cd application_name
 ```
 
-## [Developing](docs/en/parts/development.md)
+## [Developing](https://github.com/rambler-digital-solutions/rship/blob/master/docs/en/docs/parts/development.md)
 ```bash
 $ cd /Users/foo/code/application_folder
 $ rship run dev
 ```
 
-## [Building](docs/en/parts/building.md)
+## [Building](https://github.com/rambler-digital-solutions/rship/blob/master/docs/en/docs/parts/building.md)
 ```bash
 $ cd /Users/foo/code/application_folder
 $ rship run build
