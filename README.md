@@ -6,8 +6,8 @@
 
 Current appilcation is **CLI** (Command Line Interface) which avaliable by ```$ rship```
 
-## Documentation
-Last [documentation](https://rambler-digital-solutions.github.io/rship/) here 
+## [Documentation](https://rambler-digital-solutions.github.io/rship/)
+
 
 ## [Installation](https://github.com/rambler-digital-solutions/rship/blob/master/docs/en/docs/parts/install.md)
 ```bash
