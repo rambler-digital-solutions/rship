@@ -7,7 +7,10 @@
     "rship": "./ship"
   },
   "scripts": {
-    "ci": "./node_modules/.bin/_mocha ./cli/__tests__/index.js",
+    "ci": "mocha ./cli/**/*.spec.js",
+    "tdd": "mocha ./cli/**/*.spec.js --watch --recursive",
+    "code:coverage": "istanbul cover ./node_modules/.bin/_mocha mocha ./cli/**/*.spec.js && npm run code:report",
+    "code:report": "CODECLIMATE_REPO_TOKEN=45f0fcd76c25048c825d4f45f4d17f141358e1519a9c8ba54f792885499477e7 ./node_modules/.bin/codeclimate-test-reporter < coverage/lcov.info",
     "docs:prepare": "gitbook install",
     "docs:watch": "gitbook serve",
     "docs:build": "rm -rf _book && gitbook build",
@@ -31,12 +34,15 @@
     "colors": "1.1.2",
     "commander": "2.9.0",
     "memory-fs": "0.3.0",
-    "webpack": "^1.13.2",
+    "webpack": "1.13.2",
     "webpack-dev-server": "1.16.2",
     "yarn": "0.17.2"
   },
   "devDependencies": {
     "chai": "3.5.0",
+    "codeclimate-test-reporter": "0.4.0",
+    "eslint-config-rambler": "0.2.5",
+    "istanbul": "0.4.5",
     "mocha": "3.1.2"
   }
 }
