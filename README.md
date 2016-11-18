@@ -9,7 +9,7 @@ Current appilcation is **CLI** (Command Line Interface) which avaliable by ```$ 
 ## [Documentation](https://rambler-digital-solutions.github.io/rship/)
 
 
-## [Installation](https://github.com/rambler-digital-solutions/rship/blob/master/docs/en/docs/parts/install.md)
+## [Installation](https://github.com/rambler-digital-solutions/rship/blob/master/docs/en/docs/parts/installation.md)
 ```bash
 $ npm i rship -g          # via npm
 $ yarn add rship --global # via yarn
@@ -39,7 +39,7 @@ Usage: rship [options] [command]
 ```
 
 
-## Create application
+## Initialize application
 After install **RSHIP** is ready for creating application from [boilerplate](https://github.com/mrsum/rship-boilerplate)
 ```bash
 $ rship new application_name # rship n applciation_name

@@ -1,10 +1,10 @@
-# RSHIP
+# RSHIP 🚀
 
 **RSHIP** *(Rocket Ship)* – simple and effective tool for developing and building isimorphic web application.
 
 Current appilcation is **CLI** (Command Line Interface) which avaliable by ```$ rship```
 
-## [Installation](parts/install.md)
+## [Installation](parts/installation.md)
 ```bash
 $ npm i rship -g          # via npm
 $ yarn add rship --global # via yarn
@@ -34,7 +34,7 @@ Usage: rship [options] [command]
 ```
 
 
-## Create application
+## Initialize application
 After install **RSHIP** is ready for creating application from [boilerplate](https://github.com/mrsum/rship-boilerplate)
 ```bash
 $ rship new application_name # rship n applciation_name

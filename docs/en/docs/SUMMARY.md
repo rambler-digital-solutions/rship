@@ -1,7 +1,7 @@
 # Summary
 
 * [Introduce](README.md)
-* [Install](parts/install.md)
+* [Installation](parts/installation.md)
 * [Configure](parts/configure.md)
 * [Dependencies](parts/requirments.md)
 * [Developing](parts/development.md)
