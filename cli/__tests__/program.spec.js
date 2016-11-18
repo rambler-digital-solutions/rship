@@ -14,6 +14,4 @@ describe('formal CLI tests', () => {
     expect(CLI.commands).to.be.a('array');
   });
 
-  // console.log(API.commands);
-
 });

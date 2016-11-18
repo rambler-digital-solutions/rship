@@ -1,0 +1,4 @@
+eslint:
+  enabled: true
+  config:
+    config: ./node_modules/eslint-config-rambler/.eslintrc
