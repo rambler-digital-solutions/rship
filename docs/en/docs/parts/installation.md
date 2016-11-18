@@ -1,6 +1,6 @@
-# RSHIP / Installing
+# RSHIP / Installation
 
-## Installing (Locally):
+## Installation (Locally):
 Just install RSHIP via ```npm``` or ```yarn```
 
 ```bash
