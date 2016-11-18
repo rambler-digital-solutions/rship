@@ -1,4 +1,5 @@
 yarn-error.log
+coverage/
 _book/
 dist/
 .pm2/
