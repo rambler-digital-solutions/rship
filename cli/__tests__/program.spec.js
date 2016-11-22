@@ -1,8 +1,17 @@
 'use strict';
 
-const CLI = require('../index')();
+
+// ======================
+// Depends
+// ======================
 const { expect } = require('chai');
 const { describe } = require('mocha');
+
+// ======================
+// CLI & config
+// ======================
+const config = require('../../config')(__dirname, process.cwd(),  'developmet');
+const CLI = require('../index')(process.cwd(), __dirname, config);
 
 describe('formal CLI tests', () => {
 
