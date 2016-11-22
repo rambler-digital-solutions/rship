@@ -13,7 +13,6 @@ const config = require('../../config')(__dirname, process.cwd(),  'developmet');
 const CLI = require('../index')(process.cwd(), __dirname, config);
 
 describe('formal CLI tests', () => {
-
   it('CLI should be an object', () => {
     expect(CLI).to.be.a('object');
   });
@@ -21,5 +20,4 @@ describe('formal CLI tests', () => {
   it('CLI.commands should be an array of commands', () => {
     expect(CLI.commands).to.be.a('array');
   });
-
 });
