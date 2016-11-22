@@ -42,7 +42,7 @@ const _toUnits = function(x) {
  * @param  {string}   path
  * @return {boolean}
  */
-const _check = function(path) {
+const _checkFile = function(path) {
   try {
     return fs.statSync(path).isFile();
   } catch (err) {
@@ -74,6 +74,6 @@ const _getLatestVersion = function(callback) {
 // Export functions
 // ======================
 module.exports.log = _log;
-module.exports.check = _check;
+module.exports.check = _checkFile;
 module.exports.toUnits = _toUnits;
 module.exports.getLatestVersion = _getLatestVersion;
