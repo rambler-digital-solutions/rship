@@ -43,10 +43,9 @@ module.exports = function(__CWD, __ROOT, __ENV) {
   // Base config
   // ======================
   let applicationConfig = {};
-  let packageJson = {};
+  let packageJson = require('./package');
   try {
     applicationConfig = require(`${__ROOT}/ship.config`);
-    packageJson = require('./package');
   } catch (err) {
     //
   }
@@ -111,3 +110,6 @@ module.exports = function(__CWD, __ROOT, __ENV) {
   return mergeDeep(config, applicationConfig);
 };
 
+
+module.exports.isObject = isObject;
+module.exports.mergeDeep = mergeDeep;

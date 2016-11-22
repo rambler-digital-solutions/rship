@@ -13,7 +13,7 @@ const colors = require('colors');
  * @param  {[type]} compiler [description]
  * @return {[type]}          [description]
  */
-module.exports = function(config) {
+module.exports = function(config, render = true) {
 
   // Create a screen object.
   const screen = blessed.screen({
@@ -157,36 +157,20 @@ module.exports = function(config) {
     }
   });
 
-  // // helper
-  // const helperBlock = blessed.box({
-  //   parent: screen,
-  //   content: ` ${colors.green('PATH')}: ${config.dir}`,
-  //   height: 3,
-  //   width: '100%',
-  //   left: 0,
-  //   bottom: 0,
-  //   style: {
-  //     border: {
-  //       fg: 'blue'
-  //     }
-  //   },
-  //   border: {
-  //     type: 'line'
-  //   }
-  // });
+  // Render the screen.  
+  if (render) {
+    // Focus our element.
+    logsBlock.focus();
 
-  // Focus our element.
-  logsBlock.focus();
-
-  // Render the screen.
-  screen.render();
-
-  // quit on Escape, q, or Control-C.
-  screen.key(['enter'], function() {
-    logsBlock.setContent(colors.green.bold('( ͡° ͜ʖ ͡°) | clear lines'));
     screen.render();
-  });
 
+    // quit on Escape, q, or Control-C.
+    screen.key(['enter'], function() {
+      logsBlock.setContent(colors.green.bold('( ͡° ͜ʖ ͡°) | clear lines'));
+      screen.render();
+    });
+  }
+  
   // scope of screens
   return {
     memoryBlock,        cpuBlock,   compilingBlock,

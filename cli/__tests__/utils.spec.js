@@ -25,7 +25,7 @@ const LoggerStub = {
       ? this.messages[this.messages.length - 1 ]
       : null
   }
-}
+};
 
 describe('utils', () => {
 
