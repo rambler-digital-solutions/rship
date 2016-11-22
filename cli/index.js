@@ -3,9 +3,9 @@
 // ======================
 // Depends
 // ======================
-const program = require('commander');
-const colors = require('colors');
-const registry = require('./libs/registry');
+const colors      = require('colors');
+const program     = require('commander');
+const registry    = require('./libs/registry');
 const packageJson = require('../package');
 
 /**

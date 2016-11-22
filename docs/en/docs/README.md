@@ -39,7 +39,7 @@ Usage: rship [options] [command]
 
 
 ## Initialize application
-After install **RSHIP** is ready for creating application from [boilerplate](https://github.com/mrsum/rship-boilerplate)
+When **RSHIP** has been istalled, CLI is ready for creating application from [boilerplate](https://github.com/mrsum/rship-boilerplate)
 ```bash
 $ rship new application_name # rship n applciation_name
 ```

@@ -62,12 +62,15 @@ module.exports = function(__CWD, __ROOT, __ENV) {
     requirments: {
       node: '6.3.0'
     },
-    generator: 'https://github.com/mrsum/rship-boilerplate/archive/master.tar.gz',
+    generator: {
+      'react-redux-boilerplate': 'https://github.com/mrsum/react-redux-boilerplate/archive/master.tar.gz'
+    },
     webpack: {
       client: `${__ROOT}/webpack/webpack.client.js`,
       server: `${__ROOT}/webpack/webpack.server.js`,
     },
     aliases: {
+      _app: `${__ROOT}/source`,
       _config: `${__ROOT}/ship.config.js`,
       _server: `${__ROOT}/source/server`,
       _client: `${__ROOT}/source/client`,
@@ -85,6 +88,7 @@ module.exports = function(__CWD, __ROOT, __ENV) {
     },
     build: {
       path: `${__ROOT}/dist/`,
+      minify: true,
       server: {
         file: 'server.js',
         path: `${__ROOT}/dist/server`

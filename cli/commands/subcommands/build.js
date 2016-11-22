@@ -33,6 +33,30 @@ module.exports = function(program, config = {}) {
   const serverConfig = require(config.webpack.server)(config);
   const clientConfig = require(config.webpack.client)(config);
 
+
+  if (config.build.minify) {
+
+    let minifyServer = new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    });
+
+    let minifyClient = new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    });
+
+
+    serverConfig && !serverConfig.plugins ? serverConfig.plugins = [] : null;
+    clientConfig && !clientConfig.plugins ? clientConfig.plugins = [] : null;
+
+    serverConfig.plugins.push(minifyServer);
+    clientConfig.plugins.push(minifyClient);
+  }
+  
+
   // prepare separated webpack instances
   let serverCompiler = webpack(serverConfig);
   let clientCompiler = webpack(clientConfig);
@@ -44,10 +68,11 @@ module.exports = function(program, config = {}) {
   childProcess.execSync(`mkdir ${dir}/dist`, { cwd: cwd });
 
   let Server = new Promise((resolve, reject) => {
+    program.parent.log('SHIP: Webpack.Server:Building...', 'green');
     serverCompiler.run((err) => {
       // build has errors
       if (err) {
-        program.parent.log('SHIP:Webpack.Server:Error ' + JSON.stringify(err, '\n', 2), 'red');
+        program.parent.log('SHIP: Webpack.Server:Error ' + JSON.stringify(err, '\n', 2), 'red');
         reject(err);
       }
 
@@ -57,10 +82,11 @@ module.exports = function(program, config = {}) {
   });
 
   let Client = new Promise((resolve, reject) => {
+    program.parent.log('SHIP: Webpack.Client:Building...', 'green');
     clientCompiler.run((err) => {
       // build has errors
       if (err) {
-        program.parent.log('SHIP:Webpack.Client:Error ' + JSON.stringify(err, '\n', 2), 'red');
+        program.parent.log('SHIP: Webpack.Client:Error ' + JSON.stringify(err, '\n', 2), 'red');
         reject(err);
       }
 

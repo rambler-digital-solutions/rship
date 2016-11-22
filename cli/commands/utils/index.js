@@ -4,6 +4,7 @@
 // Depends
 // ======================
 const fs = require('fs');
+const http = require('http');
 const colors = require('colors');
 
 /**
@@ -49,9 +50,30 @@ const _check = function(path) {
   }
 };
 
+
+/**
+ * Get latest version of rship package
+ * @param  {Function} callback [description]
+ * @return {[type]}            [description]
+ */
+const _getLatestVersion = function(callback) {
+  http.get({
+    hostname: 'registry.npmjs.org', path: '/rship'
+  }, (res) => {
+    var body = '';
+    res.on('data', function(d) { body += d; });
+    res.on('end', function() {
+      callback(null, JSON.parse(body)['dist-tags'].latest);
+    });
+  }).on('error', (e) => {
+    callback(e, null);
+  });
+};
+
 // ======================
 // Export functions
 // ======================
 module.exports.log = _log;
 module.exports.check = _check;
 module.exports.toUnits = _toUnits;
+module.exports.getLatestVersion = _getLatestVersion;
