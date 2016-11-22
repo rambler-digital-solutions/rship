@@ -16,13 +16,11 @@ const packageJson = require('../package');
  * @return {[type]}        [description]
  */
 module.exports = function(__CWD, __ROOT, config) {
-  // get version and description from package.json file
-  const { version, description } = packageJson;
 
   // define program
   program
-    .version(colors.green(version))
-    .description(colors.blue(description));
+    .version(colors.green(config.details.version))
+    .description(colors.blue(config.details.description));
 
   // register commands
   return registry(program, config,

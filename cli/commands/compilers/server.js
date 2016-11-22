@@ -52,6 +52,19 @@ ServerCompiler.prototype.start = function(devScreen) {
     temp: false   // temporary process
   };
 
+  // check version
+  utils.getLatestVersion((err, lastVersion) => {
+    let currentVersion = this.config.details.version;
+    if (err) {
+      utils.log(logsBlock, 'SHIP: Can\'t check last verion', 'red');
+    }
+
+    if (lastVersion > currentVersion ) {
+      utils.log(logsBlock, `SHIP: Is outdated, current version is: ${currentVersion}, last version is: ${lastVersion}`, 'red'); 
+      utils.log(logsBlock, `SHIP: Please update @see https://rambler-digital-solutions.github.io/rship/en/parts/update.html`, 'red'); 
+    }
+  });
+
   // run the trap!
   utils.log(logsBlock, 'SHIP: Initialize', 'green');
   utils.log(logsBlock, 'SHIP: Run client compile', 'green');
@@ -172,6 +185,8 @@ ServerCompiler.prototype.start = function(devScreen) {
     screen.render();
     return true;
   });
+
+
 };
 
 module.exports = ServerCompiler;

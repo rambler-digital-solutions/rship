@@ -7,13 +7,8 @@ const __ENV = process && process.env && process.env.NODE_ENV
   ? process.env.NODE_ENV
   : 'development';
 
-const path          = require('path');
-const colors        = require('colors');
-const readline      = require('readline');
-const childProcess  = require('child_process');
-const utils         = require('./cli/commands/utils');
-const config        = require('./config')(__dirname, process.cwd(),  __ENV);
-const packageJson   = require('./package');
+const colors = require('colors');
+const config = require('./config')(__dirname, process.cwd(),  __ENV);
 
 // ======================
 // SHIP logo
@@ -29,53 +24,6 @@ const ship = [
   '................................',
 ].join('\n');
 
-/**
- * Run RSHIP CLI
- * @return {[type]} [description]
- */
-const run = function() {
-
-  // ======================
-  // Initialize CLI
-  // ======================
-  const program = require('./cli/index')(
-    process.cwd(), __dirname, config
-  );
-
-  // ======================
-  // Parse command arguments
-  // ======================
-  program.parse(process.argv);
-
-  // ======================
-  // if program was called
-  // without arguments, show help.
-  // ======================
-  if (program.args.length === 0) program.help();
-};
-
-/**
- * Run Update
- * @return {[type]} [description]
- */
-const update = function() {
-  const { cwd } = config;
-  const tempoPath = path.join('tmp', 'rship-temp');
-
-  let updateProcess = childProcess.exec(
-    `
-    rm -rf rship && 
-    mkdir rship && 
-    ${cwd}/node_modules/.bin/yarn add rship &&
-    mv node_modules/.bin/* rship/node_modules/.bin &&
-    mv node_modules/rship/* rship/ &&
-    mv node_modules/* rship/node_modules &&
-    chmod +X rship/ship
-    `, { cwd: '/tmp' });
-
-  updateProcess.stdout.pipe(process.stdout);
-};
-
 // ======================
 // Check nodejs version
 // ======================
@@ -87,35 +35,19 @@ if (process.versions.node.split('.').join('') <  config.requirments.node.split('
 }
 
 // ======================
-// Check latest RSHIP version
+// Initialize CLI
 // ======================
-utils.getLatestVersion((err, version) => {
-  // npmjs request has errors
-  if (err) {
-    // push to stream
-    process.stdout.write(`SHIP: Error \n ${colors.red(err.message)} \n`);
-  }
+const program = require('./cli/index')(
+  process.cwd(), __dirname, config
+);
 
-  // validate versions
-  if (packageJson.version < version) {
+// ======================
+// Parse command arguments
+// ======================
+program.parse(process.argv);
 
-    // create readline interface
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout
-    });
-
-    // sent question
-    rl.question(colors.red(`RSHIP is outdated. \nLast version is: ${version}, \nLocal is ${packageJson.version}, do you want update? [y/n] `), answer => {
-      switch(answer.toLowerCase()) {
-        case 'y': 
-        case 'yes':
-          update(); break;
-
-        default: run();
-      }
-      rl.close();
-    });
-
-  } else run();
-});
+// ======================
+// if program was called
+// without arguments, show help.
+// ======================
+if (program.args.length === 0) program.help();

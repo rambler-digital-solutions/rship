@@ -43,18 +43,25 @@ module.exports = function(__CWD, __ROOT, __ENV) {
   // Base config
   // ======================
   let applicationConfig = {};
+  let packageJson = {};
   try {
     applicationConfig = require(`${__ROOT}/ship.config`);
+    packageJson = require('./package');
   } catch (err) {
     //
   }
+
+  const { version, description } = packageJson;
 
   // ======================
   // Base config
   // ======================
   let config = {
     name: 'SHIP',
-    version: '0.0.1',
+    details: {
+      version: version,
+      description: description
+    },
     description: 'CLI for building Isomorphic Web App',
     cwd: __CWD,
     dir: __ROOT,

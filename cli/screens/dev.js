@@ -133,9 +133,9 @@ module.exports = function(config) {
     scrollable: true,
     label: colors.green.bold(' Logs: '),
     width: '100%',
-    height: '78%',
+    height: '81%',
     left: 0,
-    top: '19%',
+    bottom: 0,
     padding: {
       top: 1,
       left: 2
@@ -157,23 +157,23 @@ module.exports = function(config) {
     }
   });
 
-  // helper
-  const helperBlock = blessed.box({
-    parent: screen,
-    content: ` ${colors.green('PATH')}: ${config.dir}`,
-    height: 3,
-    width: '100%',
-    left: 0,
-    bottom: 0,
-    style: {
-      border: {
-        fg: 'blue'
-      }
-    },
-    border: {
-      type: 'line'
-    }
-  });
+  // // helper
+  // const helperBlock = blessed.box({
+  //   parent: screen,
+  //   content: ` ${colors.green('PATH')}: ${config.dir}`,
+  //   height: 3,
+  //   width: '100%',
+  //   left: 0,
+  //   bottom: 0,
+  //   style: {
+  //     border: {
+  //       fg: 'blue'
+  //     }
+  //   },
+  //   border: {
+  //     type: 'line'
+  //   }
+  // });
 
   // Focus our element.
   logsBlock.focus();
@@ -190,7 +190,7 @@ module.exports = function(config) {
   // scope of screens
   return {
     memoryBlock,        cpuBlock,   compilingBlock,
-    activeProcessBlock, logsBlock,  helperBlock,
+    activeProcessBlock, logsBlock,
     screen
   };
 };
