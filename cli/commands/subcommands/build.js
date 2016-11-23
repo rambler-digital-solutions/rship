@@ -29,13 +29,12 @@ module.exports = function(program, config = {}) {
 
   program.parent.log(colors.green.bold(ship));
 
-  // // get webpack configs
+  // get webpack configs
   const serverConfig = require(config.webpack.server)(config);
   const clientConfig = require(config.webpack.client)(config);
 
-
+  // if config has minify option
   if (config.build.minify) {
-
     let minifyServer = new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
@@ -48,25 +47,26 @@ module.exports = function(program, config = {}) {
       }
     });
 
-
     serverConfig && !serverConfig.plugins ? serverConfig.plugins = [] : null;
     clientConfig && !clientConfig.plugins ? clientConfig.plugins = [] : null;
 
     serverConfig.plugins.push(minifyServer);
     clientConfig.plugins.push(minifyClient);
   }
-  
 
   // prepare separated webpack instances
   let serverCompiler = webpack(serverConfig);
   let clientCompiler = webpack(clientConfig);
 
+  // lets send user notice
   program.parent.log('SHIP: Start compiling');
-
   program.parent.log('SHIP: Remove old files', 'green');
+  
+  // prepare folders for compiling
   childProcess.execSync(`rm -rf ${dir}/dist`, { cwd: cwd });
   childProcess.execSync(`mkdir ${dir}/dist`, { cwd: cwd });
 
+  // server compiler
   let Server = new Promise((resolve, reject) => {
     program.parent.log('SHIP: Webpack.Server:Building...', 'green');
     serverCompiler.run((err) => {
@@ -81,6 +81,7 @@ module.exports = function(program, config = {}) {
     });
   });
 
+  // client compiler
   let Client = new Promise((resolve, reject) => {
     program.parent.log('SHIP: Webpack.Client:Building...', 'green');
     clientCompiler.run((err) => {
@@ -95,6 +96,7 @@ module.exports = function(program, config = {}) {
     });
   });
 
+  // copy node_modules
   let Copy = new Promise((resolve, reject) => {
     try {
       childProcess.execSync(`mkdir ${dir}/dist/server`, { cwd: cwd });
@@ -105,7 +107,7 @@ module.exports = function(program, config = {}) {
     }
   });
 
-  // ZIP all files
+  // wrap steps to promise
   Promise.all([Server, Client, Copy]).then(() => {
     try {
       program.parent.log('SHIP: Done', 'green');

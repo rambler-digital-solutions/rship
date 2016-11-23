@@ -34,6 +34,11 @@ module.exports = function(config) {
 
   } else {
 
+    /**
+     * Send message from child process to master
+     * @param  {...[type]} data [description]
+     * @return {[type]}         [description]
+     */
     let sendMessage = function(...data) {
       let message = {
         type: this.type ? this.type : 'log',
@@ -95,19 +100,17 @@ module.exports = function(config) {
           info: sendMessage.bind({ type: 'info' })
         };
 
-        /**
-         * Run source code into new context
-         */
+        // Run source code into new context
         script.runInNewContext({
           module, console, require,
           process, __dirname, __filename,
           setTimeout, setInterval, Error
         });
 
-        // stop tempo interval
+        // stop temporary process interval
         clearInterval(interval);
 
-        // process usage updater
+        // process usage updater, each 500ms
         setInterval(function() {
           var usage = process.cpuUsage();
           if (lastUsage) {
