@@ -110,6 +110,7 @@ module.exports = function(__CWD, __ROOT, __ENV) {
   return mergeDeep(config, applicationConfig);
 };
 
-
+// export testable function
 module.exports.isObject = isObject;
 module.exports.mergeDeep = mergeDeep;
+

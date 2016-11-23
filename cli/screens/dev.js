@@ -13,15 +13,16 @@ const colors = require('colors');
  * @param  {[type]} compiler [description]
  * @return {[type]}          [description]
  */
-module.exports = function(config, render = true) {
+module.exports = function(config = {}) {
 
   // Create a screen object.
   const screen = blessed.screen({
     smartCSR: true,
     dockBorders: false,
-    autoPadding: true,
-    title: 'Rambler Ship'
+    autoPadding: true
   });
+
+  screen.title = 'Rocket Ship';
 
   // top-left memory block
   const memoryBlock = blessed.box({
@@ -127,7 +128,7 @@ module.exports = function(config, render = true) {
     top: '10%'
   });
 
-  // Create a box perfectly centered horizontally and vertically.
+  // logs block
   const logsBlock = blessed.log({
     parent: screen,
     scrollable: true,
@@ -157,20 +158,23 @@ module.exports = function(config, render = true) {
     }
   });
 
-  // Render the screen.  
-  if (render) {
-    // Focus our element.
-    logsBlock.focus();
+  // Focus our element.
+  logsBlock.focus();
 
+  // render
+  screen.render();
+
+  // quit on Escape, q, or Control-C.
+  screen.key(['enter'], function() {
+    logsBlock.setContent(colors.green.bold('( ͡° ͜ʖ ͡°) | clear lines'));
     screen.render();
+  });
 
-    // quit on Escape, q, or Control-C.
-    screen.key(['enter'], function() {
-      logsBlock.setContent(colors.green.bold('( ͡° ͜ʖ ͡°) | clear lines'));
-      screen.render();
-    });
-  }
-  
+  // quit on Escape, q, or Control-C.
+  screen.key(['escape', 'q', 'C-c'], function() {
+    process.exit(0);
+  });
+
   // scope of screens
   return {
     memoryBlock,        cpuBlock,   compilingBlock,

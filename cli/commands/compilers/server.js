@@ -70,11 +70,6 @@ ServerCompiler.prototype.start = function(devScreen) {
   utils.log(logsBlock, 'SHIP: Run client compile', 'green');
   utils.log(logsBlock, 'SHIP: Run server compile', 'green');
 
-  // quit on Escape, q, or Control-C.
-  screen.key(['escape', 'q', 'C-c'], function() {
-    process.exit(0);
-  });
-
   /**
    * Create worker, also will subscrbe on process messages
    * @param  {Function} cb [description]

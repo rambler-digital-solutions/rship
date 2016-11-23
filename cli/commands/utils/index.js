@@ -53,8 +53,8 @@ const _checkFile = function(path) {
 
 /**
  * Get latest version of rship package
- * @param  {Function} callback [description]
- * @return {[type]}            [description]
+ * @param  {Function} callback
+ * @return {string}            Last rship version from npm
  */
 const _getLatestVersion = function(callback) {
   http.get({

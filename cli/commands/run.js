@@ -33,7 +33,7 @@ module.exports = function(program, config) {
         : config.env = 'production';
 
       // check env
-      env && env === 'dev'
+      env === 'dev'
         ? devSubtask(config)
         : buildSubtask(this, config);
 
