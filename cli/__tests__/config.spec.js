@@ -9,7 +9,7 @@ const { describe } = require('mocha');
 // ======================
 // Config
 // ======================
-const config = require('../../config')(__dirname, process.cwd(),  'developmet');
+const config = require('../../config')(__dirname, process.cwd(),  'development');
 
 const { isObject, mergeDeep } = require('../../config');
 
