@@ -3,13 +3,9 @@
 // ======================
 // Depends
 // ======================
+const { closeSync, openSync, unlinkSync } = require('fs');
 const { expect } = require('chai');
 const { describe } = require('mocha');
-const colors = require('colors');
-
-// ======================
-// Utils
-// ======================
 const utils = require('../commands/utils');
 
 // ======================
@@ -21,19 +17,24 @@ const LoggerStub = {
     this.messages.push(message);
   },
   last: function() {
-    return this.messages.length >= 1 
+    return this.messages.length >= 1
       ? this.messages[this.messages.length - 1 ]
-      : null
+      : null;
   }
 };
 
-describe('utils', () => {
+const shipConfStub = __dirname + '/ship.config.js';
 
+// ======================
+// Tests
+// ======================
+
+describe('utils', () => {
   it('getLatestVersion()', () => {
     utils.getLatestVersion((err, version) => {
       expect(err).to.be.a('null');
       expect(version).to.be.a('string');
-    })
+    });
   });
 
   it('toUnits()', () => {
@@ -50,10 +51,18 @@ describe('utils', () => {
     expect(LoggerStub.last()).to.be.a('string');
   });
 
-  it('check()', () => {
-    expect(utils.check('package.json')).to.be.a('boolean');
-    expect(utils.check('package.json')).equal(true);
-    expect(utils.check('somefile.js')).equal(false);
+  it('checkFile()', () => {
+    closeSync(openSync(shipConfStub, 'w'));
+    expect(utils.checkFile(shipConfStub)).to.be.a('boolean');
+    expect(utils.checkFile(shipConfStub)).to.be.true;
+    expect(utils.checkFile('./somefile')).to.be.false;
+    unlinkSync(shipConfStub);
   });
 
+  it('makeCommand()', () => {
+    expect(utils.makeCommand(process.cwd())).to.be.a('string');
+    expect(utils.makeCommand(process.cwd())).to.equal(`${process.cwd()}/node_modules/.bin/yarn`);
+    expect(utils.makeCommand(process.cwd(), 'add', ['zero'], {save: true})).to.equal(`${process.cwd()}/node_modules/.bin/yarn add zero --save`);
+    expect(utils.makeCommand(process.cwd(), 'remove', ['zero'])).to.equal(`${process.cwd()}/node_modules/.bin/yarn remove zero`);
+  });
 });
