@@ -32,9 +32,7 @@ describe('libs', () => {
 
   it('should call commands from registry', () => {
     registry(program, config, [spyFunc, spyFunc, spyFunc]);
-
     expect(spyFunc.calledThrice).to.be.true;
     expect(spyFunc.alwaysCalledWithExactly(program, config)).to.be.true;
-    expect(spyFunc.args[0][0]).to.have.property('log').with.equal(logger);
   });
 });
