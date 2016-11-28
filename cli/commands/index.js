@@ -1,9 +1,13 @@
 'use strict';
 
-const { newCmd } = require('./newCmd');
-const { setup } = require('./setup');
-const { run } = require('./run');
-const { install } = require('./install');
-const { remove } = require('./remove');
-
-module.exports.commands = [newCmd, setup, run, install, remove];
+/**
+ * Array of objects
+ * @type {Array}
+ */
+module.exports = [
+  require('./new'),
+  require('./setup'),
+  require('./run'),
+  require('./install'),
+  require('./remove')
+];

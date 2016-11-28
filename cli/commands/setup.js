@@ -6,7 +6,6 @@
 const logger = require('../libs/logger');
 const utils = require('./utils');
 const colors = require('colors');
-const childProcess = require('child_process');
 
 /**
  * SHIP.CLI.setup
@@ -14,7 +13,7 @@ const childProcess = require('child_process');
  * @param  {object}   config  [description]
  * @return {boolean}
  */
-const setup = function(program, config) {
+const cmd = function(program, config) {
   program
     .command('setup')
     .option('-f, --force', 'reinstall all dependencies')
@@ -29,7 +28,14 @@ const setup = function(program, config) {
       if (options.force) {
         try {
           logger('Removing client node_modules');
-          childProcess.execSync(`rm -rf ${dir}/node_modules`, { cwd: dir });
+
+          utils.exec(
+            `rm -rf ${dir}/node_modules`, // command
+            { cwd: dir },                 // options
+            null,                         // no callback
+            true                          // is sync
+          );
+
         } catch (err) {
           logger('Failed', 'red');
           return false;
@@ -39,20 +45,22 @@ const setup = function(program, config) {
       logger('Installing dependencies');
 
       try {
-        let instalation = childProcess.exec(
-          utils.makeCommand(cwd),
-          { cwd: dir}
+        utils.exec(
+          utils.makeCommand(cwd),       // command
+          { cwd: dir },                 // options
+          null,                         // no callback
+          false,                        // is sync
+          true                          // print
         );
-        instalation.stdout.pipe(process.stdout);
       } catch (err) {
         logger(`${dir} dont has package.json`, 'red');
         return false;
       }
-
       logger('Success');
-
       return true;
     });
 };
 
-module.exports.setup = setup;
+// exports
+module.exports        = cmd;
+module.exports.setup  = cmd;

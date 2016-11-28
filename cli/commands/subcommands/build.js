@@ -6,6 +6,8 @@
 const colors = require('colors');
 const webpack = require('webpack');
 const childProcess = require('child_process');
+const logger = require('../../libs/logger');
+const utils  = require('../utils');
 
 /**
  * Build task
@@ -27,7 +29,7 @@ module.exports = function(program, config = {}) {
     '                                '
   ].join('\n');
 
-  program.parent.log(colors.green.bold(ship));
+  logger(colors.green.bold(ship));
 
   // get webpack configs
   const serverConfig = require(config.webpack.server)(config);
@@ -59,39 +61,39 @@ module.exports = function(program, config = {}) {
   let clientCompiler = webpack(clientConfig);
 
   // lets send user notice
-  program.parent.log('SHIP: Start compiling');
-  program.parent.log('SHIP: Remove old files', 'green');
+  logger('SHIP: Start compiling');
+  logger('SHIP: Remove old files', 'green');
   
   // prepare folders for compiling
-  childProcess.execSync(`rm -rf ${dir}/dist`, { cwd: cwd });
-  childProcess.execSync(`mkdir ${dir}/dist`, { cwd: cwd });
+  utils.exec(`rm -rf ${dir}/dist`, { cwd: cwd }, null, true);
+  utils.exec(`mkdir ${dir}/dist`, { cwd: cwd }, null, true);
 
   // server compiler
   let Server = new Promise((resolve, reject) => {
-    program.parent.log('SHIP: Webpack.Server:Building...', 'green');
+    logger('SHIP: Webpack.Server:Building...', 'green');
     serverCompiler.run((err) => {
       // build has errors
       if (err) {
-        program.parent.log('SHIP: Webpack.Server:Error ' + JSON.stringify(err, '\n', 2), 'red');
+        logger('SHIP: Webpack.Server:Error ' + JSON.stringify(err, '\n', 2), 'red');
         reject(err);
       }
 
-      program.parent.log('SHIP: Server has been compiled at ./dist/server', 'green');
+      logger('SHIP: Server has been compiled at ./dist/server', 'green');
       resolve();
     });
   });
 
   // client compiler
   let Client = new Promise((resolve, reject) => {
-    program.parent.log('SHIP: Webpack.Client:Building...', 'green');
+    logger('SHIP: Webpack.Client:Building...', 'green');
     clientCompiler.run((err) => {
       // build has errors
       if (err) {
-        program.parent.log('SHIP: Webpack.Client:Error ' + JSON.stringify(err, '\n', 2), 'red');
+        logger('SHIP: Webpack.Client:Error ' + JSON.stringify(err, '\n', 2), 'red');
         reject(err);
       }
 
-      program.parent.log('SHIP: Client has been compiled at ./dist/client', 'green');
+      logger('SHIP: Client has been compiled at ./dist/client', 'green');
       resolve();
     });
   });
@@ -99,8 +101,8 @@ module.exports = function(program, config = {}) {
   // copy node_modules
   let Copy = new Promise((resolve, reject) => {
     try {
-      childProcess.execSync(`mkdir ${dir}/dist/server`, { cwd: cwd });
-      childProcess.execSync(`cp -r ${dir}/node_modules ${dir}/dist/server/node_modules/`, { cwd: cwd });
+      utils.exec(`mkdir ${dir}/dist/server`, { cwd: cwd }, null, true);
+      utils.exec(`cp -r ${dir}/node_modules ${dir}/dist/server/node_modules/`, { cwd: cwd }, null, true);
       resolve();
     } catch (err) {
       reject(err);
@@ -110,7 +112,7 @@ module.exports = function(program, config = {}) {
   // wrap steps to promise
   Promise.all([Server, Client, Copy]).then(() => {
     try {
-      program.parent.log('SHIP: Done', 'green');
+      logger('SHIP: Done', 'green');
     } catch (err) {
       throw new Error(err);
     }

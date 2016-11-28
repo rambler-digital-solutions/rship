@@ -14,7 +14,7 @@ const buildSubtask = require('./subcommands/build');
  * @param  {object}   config  [description]
  * @return {boolean}
  */
-const run = function(program, config) {
+const cmd = function(program, config) {
   program
     .command('run [env]')
     .description(colors.yellow('run development mode'))
@@ -34,4 +34,6 @@ const run = function(program, config) {
     });
 };
 
-module.exports.run = run;
+// export
+module.exports      = cmd;
+module.exports.run  = cmd;

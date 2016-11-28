@@ -3,10 +3,9 @@
 // ======================
 // Depends
 // ======================
-const utils = require('./utils');
-const logger = require('../libs/logger');
-const colors = require('colors');
-const childProcess = require('child_process');
+const utils   = require('./utils');
+const logger  = require('../libs/logger');
+const colors  = require('colors');
 
 /**
  * SHIP.CLI.remove
@@ -14,7 +13,7 @@ const childProcess = require('child_process');
  * @param  {object}   config  [description]
  * @return {boolean}
  */
-const remove = function(program, config) {
+const cmd = function(program, config) {
   program
     .command('remove [packages...]')
     .alias('r')
@@ -24,14 +23,18 @@ const remove = function(program, config) {
       if (!utils.checkInstance(dir)) return false;
       logger('Please be patient');
 
-      let instalation = childProcess.exec(
-        utils.makeCommand(cwd, 'remove', packages, options),
-        {cwd: dir}
+      utils.exec(
+        utils.makeCommand(cwd, 'remove', packages), // command
+        { cwd: dir }, // options
+        null,         // no callback
+        false,        // no sync
+        true          // print stdout
       );
-      instalation.stdout.pipe(process.stdout);
 
       return true;
     });
 };
 
-module.exports.remove = remove;
+// exports
+module.exports        = cmd;
+module.exports.remove = cmd;

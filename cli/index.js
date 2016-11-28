@@ -6,7 +6,7 @@
 const colors      = require('colors');
 const program     = require('commander');
 const registry    = require('./libs/registry');
-const { commands } = require('./commands/');
+const commands    = require('./commands/');
 
 /**
  * SHIP.CLI

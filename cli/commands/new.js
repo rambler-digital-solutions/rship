@@ -3,9 +3,9 @@
 // ======================
 // Depends
 // ======================
+const utils = require('./utils');
 const logger = require('../libs/logger');
 const colors = require('colors');
-const childProcess = require('child_process');
 
 /**
  * SHIP.CLI.new
@@ -13,7 +13,7 @@ const childProcess = require('child_process');
  * @param  {object}   config  [description]
  * @return {boolean}
  */
-const newCmd =  function(program, config) {
+const cmd = function(program, config) {
   program
     .command('new [name] [preset]')
     .alias('n')
@@ -33,25 +33,33 @@ const newCmd =  function(program, config) {
       logger(`App will create at: ${dir}/${name}`);
 
       try {
-        childProcess.execSync(`mkdir ${dir}/${name}`, { cwd: cwd });
+        utils.exec(`mkdir ${dir}/${name}`, { cwd: cwd }, true);
       } catch (err) {
         logger(`Error: Folder '${dir}/${name}' is exists`, 'red');
         return;
       }
 
-      let instalation = childProcess.exec(`
+      utils.exec(
+        `
         cd ${dir}/${name} &&
         curl -LOk ${presetUrl} &&
         tar -xzf master.tar.gz --strip-components=1 -C ./ &&
         rm master.tar.gz
-        ${utils.makeCommand(cwd)}`, { cwd: dir }, () => {
+        ${utils.makeCommand(cwd)}
+        `,           // command
+        {cwd: dir},  // options,
+
+        () => {
           logger('Instalation completed', 'green');
           logger(`Project folder: ${dir}/${name}`, 'green');
-        }
+        },           // callback
+        false,       // no sync
+        true         // print
       );
 
-      instalation.stdout.pipe(process.stdout);
     });
 };
 
-module.exports.newCmd = newCmd;
+// exports
+module.exports      = cmd;
+module.exports.new  = cmd;

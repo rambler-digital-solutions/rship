@@ -3,10 +3,11 @@
 // ======================
 // Depends
 // ======================
-const fs = require('fs');
-const http = require('http');
-const colors = require('colors');
-const logger = require('../../libs/logger');
+const fs            = require('fs');
+const http          = require('http');
+const colors        = require('colors');
+const childProcess  = require('child_process');
+const logger        = require('../../libs/logger');
 
 /**
  * SHIP.log
@@ -79,6 +80,14 @@ const checkInstance = (dir) => {
   return false;
 };
 
+/**
+ * 
+ * @param  {[type]} cwd      [description]
+ * @param  {String} command  [description]
+ * @param  {Array}  packages [description]
+ * @param  {String} options  [description]
+ * @return {[type]}          [description]
+ */
 const makeCommand = (cwd, command = '', packages = [], options = '') => {
   let opt = options;
   let pack = packages.join(' ');
@@ -86,12 +95,36 @@ const makeCommand = (cwd, command = '', packages = [], options = '') => {
   return `${cwd}/node_modules/.bin/yarn ${command} ${pack} ${opt}`.trim();
 };
 
+/**
+ * execute bash command
+ * @param  {[type]}   command [description]
+ * @param  {[type]}   opts    [description]
+ * @param  {Function} cb      [description]
+ * @param  {Boolean}  isSync  [description]
+ * @return {[type]}           [description]
+ */
+const exec = (command, opts, cb = () => {}, isSync = false, print = false) => {
+  let execCommand;
+
+  // check is sync
+  isSync
+    ? execCommand = childProcess.execSync(command, opts, cb)
+    : execCommand = childProcess.exec(command, opts, cb);
+
+  print && !isSync
+    ? execCommand.stdout.pipe(process.stdout)
+    : null;
+
+  return execCommand;
+}
+
 // ======================
 // Export functions
 // ======================
-module.exports.log = log;
-module.exports.toUnits = toUnits;
+module.exports.log              = log;
+module.exports.toUnits          = toUnits;
 module.exports.getLatestVersion = getLatestVersion;
-module.exports.checkFile = checkFile;
-module.exports.checkInstance = checkInstance;
-module.exports.makeCommand = makeCommand;
+module.exports.checkFile        = checkFile;
+module.exports.checkInstance    = checkInstance;
+module.exports.makeCommand      = makeCommand;
+module.exports.exec             = exec;

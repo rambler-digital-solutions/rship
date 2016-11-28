@@ -6,6 +6,7 @@
 const { closeSync, openSync, unlinkSync } = require('fs');
 const { expect } = require('chai');
 const { describe } = require('mocha');
+const childProcess  = require('child_process');
 const utils = require('../commands/utils');
 
 // ======================
@@ -28,7 +29,6 @@ const shipConfStub = __dirname + '/ship.config.js';
 // ======================
 // Tests
 // ======================
-
 describe('utils', () => {
   it('getLatestVersion()', () => {
     utils.getLatestVersion((err, version) => {
@@ -65,4 +65,10 @@ describe('utils', () => {
     expect(utils.makeCommand(process.cwd(), 'add', ['zero'], {save: true})).to.equal(`${process.cwd()}/node_modules/.bin/yarn add zero --save`);
     expect(utils.makeCommand(process.cwd(), 'remove', ['zero'])).to.equal(`${process.cwd()}/node_modules/.bin/yarn remove zero`);
   });
+
+  it('exec()', () => {
+    expect(utils.exec('ls -la', {}, null)).to.be.a('object').have.property('pid');
+    expect(utils.exec('ls | grep package', {}, () => {}, true, true).toString()).to.be.a('string').equal('package.json\n');
+  });
+
 });

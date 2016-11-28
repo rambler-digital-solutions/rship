@@ -7,7 +7,7 @@
  * @param {[type]}  COMMANDS
  */
 const Registry = function(program, config, commands) {
-  if (commands.length > 0) commands.forEach(command => command(program, config));
+  if (commands.length > 0) commands.forEach((command, key) => command(program, config));
   return program;
 };
 

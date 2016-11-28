@@ -6,7 +6,6 @@
 const utils = require('./utils');
 const logger = require('../libs/logger');
 const colors = require('colors');
-const childProcess = require('child_process');
 
 /**
  * SHIP.CLI.install
@@ -15,7 +14,7 @@ const childProcess = require('child_process');
  * @return {boolean}
  */
 
-const install = (program, config) => {
+const cmd = (program, config) => {
   program
     .command('install [packages...]')
     .option('-s, --save', 'save to dependencies')
@@ -27,14 +26,18 @@ const install = (program, config) => {
       if (!utils.checkInstance(dir)) return false;
       logger('Please be patient');
 
-      let installation = childProcess.exec(
-        utils.makeCommand(cwd, 'add', packages, options),
-        {cwd: dir}
+      utils.exec(
+        utils.makeCommand(cwd, 'add', packages, options), // command
+        { cwd: dir }, // options
+        null,         // no callback
+        false,        // no sync
+        true          // print stdout
       );
-      installation.stdout.pipe(process.stdout);
 
       return true;
     });
 };
 
-module.exports.install = install;
+// export
+module.exports          = cmd;
+module.exports.install  = cmd;
