@@ -14,29 +14,24 @@ const buildSubtask = require('./subcommands/build');
  * @param  {object}   config  [description]
  * @return {boolean}
  */
-module.exports = function(program, config) {
+const run = function(program, config) {
   program
     .command('run [env]')
     .description(colors.yellow('run development mode'))
     .action(function(env) {
       const { dir } = config;
+      if (!utils.checkInstance(dir)) return false;
 
-      // check ship.json application file
-      if (!utils.check(`${dir}/ship.config.js`)) {
-        this.parent.log(`${dir} is not SHIP instance`, 'red');
-        return false;
+      if (env === 'dev') {
+        config.env = 'development';
+        devSubtask(config);
+        return true;
       }
 
-      // set config env
-      env === 'dev'
-        ? config.env = 'development'
-        : config.env = 'production';
-
-      // check env
-      env === 'dev'
-        ? devSubtask(config)
-        : buildSubtask(this, config);
-
+      config.env = 'production';
+      buildSubtask(this, config);
       return true;
     });
 };
+
+module.exports.run = run;

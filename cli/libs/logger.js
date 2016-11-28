@@ -16,7 +16,6 @@ const Log = function(message, color = 'yellow', returnable = false) {
   !returnable  ? process.stdout.write(text + '\n') : null;
 
   return text;
-
 };
 
 module.exports = Log;

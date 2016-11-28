@@ -4,6 +4,7 @@
 // Depends
 // ======================
 const utils = require('./utils');
+const logger = require('../libs/logger');
 const colors = require('colors');
 const childProcess = require('child_process');
 
@@ -13,29 +14,24 @@ const childProcess = require('child_process');
  * @param  {object}   config  [description]
  * @return {boolean}
  */
-module.exports = function(program, config) {
+const remove = function(program, config) {
   program
     .command('remove [packages...]')
     .alias('r')
-    .option('-s, --save', 'save to dependencies')
-    .option('-sd, --save-dev', 'save to dev dependencies')
     .description(colors.yellow('remove client/server dependencies'))
-    .action(function(packages, options) {
+    .action(function(packages) {
       const { dir, cwd } = config;
-      // check ship.json application file
-      if (!utils.check(`${dir}/ship.config.js`)) {
-        this.parent.log(`${dir} is not SHIP instance`, 'red');
-        return false;
-      }
+      if (!utils.checkInstance(dir)) return false;
+      logger('Please be patient');
 
-      this.parent.log('Please be patient');
       let instalation = childProcess.exec(
-        `${cwd}/node_modules/.bin/yarn  remove ${packages.join(' ')} ${options.saveDev ? '--save-dev' : '--save'}`,
+        utils.makeCommand(cwd, 'remove', packages, options),
         {cwd: dir}
       );
-
       instalation.stdout.pipe(process.stdout);
 
       return true;
     });
 };
+
+module.exports.remove = remove;

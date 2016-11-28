@@ -6,6 +6,7 @@
 const fs = require('fs');
 const http = require('http');
 const colors = require('colors');
+const logger = require('../../libs/logger');
 
 /**
  * SHIP.log
@@ -15,7 +16,7 @@ const colors = require('colors');
  * @param  {Boolean} empty     [description]
  * @return {[type]}            [description]
  */
-const _log = function(container, message, color = 'yellow') {
+const log = (container, message, color = 'yellow') => {
   let date = new Date();
   return container.add(`${date.toTimeString().split(' ')[0]} ${colors[color](message)}`);
 };
@@ -25,10 +26,10 @@ const _log = function(container, message, color = 'yellow') {
  * @param  {int}    x [description]
  * @return {string}   [description]
  */
-const _toUnits = function(x) {
-  var units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-  var n = parseInt(x, 10) || 0;
-  var l = 0;
+const toUnits = (x) => {
+  let units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  let n = parseInt(x, 10) || 0;
+  let l = 0;
   while (n > 1024) {
     n = n / 1024;
     l++;
@@ -38,11 +39,28 @@ const _toUnits = function(x) {
 };
 
 /**
- * Check ship.config.js into runned folder
+ * Get latest version of rship package
+ * @param  {Function} callback [description]
+ * @return {[type]}            [description]
+ */
+const getLatestVersion = (callback) => {
+  http
+    .get(
+      { hostname: 'registry.npmjs.org', path: '/rship' },
+      (res) => {
+        let body = '';
+        res.on('data', (d) => { body += d; });
+        res.on('end', () => callback(null, JSON.parse(body)['dist-tags'].latest));
+      })
+    .on('error', (e) => callback(e, null));
+};
+
+/**
+ * Check path, if exist
  * @param  {string}   path
  * @return {boolean}
  */
-const _checkFile = function(path) {
+const checkFile = (path) => {
   try {
     return fs.statSync(path).isFile();
   } catch (err) {
@@ -50,30 +68,30 @@ const _checkFile = function(path) {
   }
 };
 
-
 /**
- * Get latest version of rship package
- * @param  {Function} callback
- * @return {string}            Last rship version from npm
+ * Check ship.config.js into runned folder & show info
+ * @param  {string} dir
+ * @return {boolean}
  */
-const _getLatestVersion = function(callback) {
-  http.get({
-    hostname: 'registry.npmjs.org', path: '/rship'
-  }, (res) => {
-    var body = '';
-    res.on('data', function(d) { body += d; });
-    res.on('end', function() {
-      callback(null, JSON.parse(body)['dist-tags'].latest);
-    });
-  }).on('error', (e) => {
-    callback(e, null);
-  });
+const checkInstance = (dir) => {
+  if (checkFile(`${dir}/ship.config.js`)) return true;
+  logger(`${dir} is not SHIP instance`, 'red');
+  return false;
+};
+
+const makeCommand = (cwd, command = '', packages = [], options = '') => {
+  let opt = options;
+  let pack = packages.join(' ');
+  if (options) opt = opt.saveDev ? '--save-dev' : '--save';
+  return `${cwd}/node_modules/.bin/yarn ${command} ${pack} ${opt}`.trim();
 };
 
 // ======================
 // Export functions
 // ======================
-module.exports.log = _log;
-module.exports.check = _checkFile;
-module.exports.toUnits = _toUnits;
-module.exports.getLatestVersion = _getLatestVersion;
+module.exports.log = log;
+module.exports.toUnits = toUnits;
+module.exports.getLatestVersion = getLatestVersion;
+module.exports.checkFile = checkFile;
+module.exports.checkInstance = checkInstance;
+module.exports.makeCommand = makeCommand;

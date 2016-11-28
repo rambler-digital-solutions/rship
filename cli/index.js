@@ -6,7 +6,7 @@
 const colors      = require('colors');
 const program     = require('commander');
 const registry    = require('./libs/registry');
-const packageJson = require('../package');
+const { commands } = require('./commands/');
 
 /**
  * SHIP.CLI
@@ -16,20 +16,11 @@ const packageJson = require('../package');
  * @return {[type]}        [description]
  */
 module.exports = function(__CWD, __ROOT, config) {
-
   // define program
   program
     .version(colors.green(config.details.version))
     .description(colors.blue(config.details.description));
 
   // register commands
-  return registry(program, config,
-    [
-      require('./commands/new'),
-      require('./commands/setup'),
-      require('./commands/run'),
-      require('./commands/install'),
-      require('./commands/remove')
-    ]
-  );
+  return registry(program, config, commands);
 };
