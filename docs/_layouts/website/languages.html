@@ -16,15 +16,14 @@
     </div>
 
     <div class="title">
-      <b>ROCKET SHIP</b> – SIMPLE AND EFECTIVE TOOL<br/>
-      FOR BUILDING ISOMORPHIC WEB APPLICATIONS
+      <b>ROCKET SHIP</b> – SIMPLE AND EFECTIVE TOOL FOR BUILDING ISOMORPHIC WEB APPLICATIONS
     </div>
 
     <div class="inner">
       <h1>Documentation</h1>
       <ul class="languages">
       {%  for lang in languages.list %}
-        <li><a href="{{ (lang.id + "/README.md")|contentURL }}">{{ lang.title }}</a></li>
+        <li><a href="{{ (lang.id + "/README.md")|contentURL }}">{{ lang.id }}</a></li>
       {% endfor %}
       </ul>
       <a href="https://www.npmjs.com/package/rship">

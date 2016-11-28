@@ -14,7 +14,7 @@
 
 .logo {
   text-align: center;
-  padding-top: 50px;
+  padding-top: 40px;
 }
 
 .title {
@@ -23,9 +23,12 @@
   font-size: 24px;
   color: #FFFFFF;
   letter-spacing: 0;
-  padding: 35px 0px;
+  padding: 35px;
   font-size: 100;
   line-height: 30px;
+  max-width: 600px;
+  margin: 0 auto;
+
 }
 
 .title b {
@@ -34,7 +37,7 @@
 
 .book-langs-index {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background: url(./images/background.png) no-repeat center center fixed;
   background-size: cover;
   padding: 0px;
@@ -52,6 +55,7 @@
   text-align: center;
   color: #fff;
   font-size: 10px;
+  padding: 35px;
 }
 
 .book-langs-index .inner h1 {
@@ -59,20 +63,29 @@
   font-weight: 100;
   padding: 0;
   margin: 0;
-  font-size: 16px
+  font-size: 14px;
+  letter-spacing: 1.49px;
 }
 
 .book-langs-index .inner .languages {
   border: none;
   padding: 0px;
-  width: 160px;
+  width: 205px;
   margin: 0 auto;
 }
 
 .book-langs-index .inner .languages a {
   color: #fff;
   font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  font-size: 26px;
 }
+
+.book-langs-index .inner .languages li {
+  padding: 5px 0px;
+}
+
+
 
 .book-langs-overlay {
   width: 100%;
