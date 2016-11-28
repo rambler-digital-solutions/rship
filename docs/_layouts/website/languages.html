@@ -1,0 +1,38 @@
+{% extends "./layout.html" %}
+
+{% block body %}
+
+<div class="book-langs-index" role="navigation">
+  <div class="book-langs-overlay">
+  
+    <div class="links">
+      <a href="https://github.com/rambler-digital-solutions/rship">
+        <img src="https://rambler-digital-solutions.github.io/rship/styles/images/github-logo.svg" width="128px" />
+      </a>
+    </div>
+
+    <div class="logo">
+      <img src="https://rambler-digital-solutions.github.io/rship/styles/images/logo.svg" alt="">
+    </div>
+
+    <div class="title">
+      <b>ROCKET SHIP</b> – SIMPLE AND EFECTIVE TOOL FOR BUILDING ISOMORPHIC WEB APPLICATIONS
+    </div>
+
+    <div class="inner">
+      <h1>Documentation</h1>
+      <ul class="languages">
+      {%  for lang in languages.list %}
+        <li><a href="{{ (lang.id + "/README.md")|contentURL }}">{{ lang.id }}</a></li>
+      {% endfor %}
+      </ul>
+      <a href="https://www.npmjs.com/package/rship">
+        <img src="https://badge.fury.io/js/rship.svg" alt="npm package">
+      </a>
+    </div>
+    <footer>
+      Powered by <a href="http://rds.digital/" target="_blank">RDS</a>
+    </footer>
+  </div>
+</div>
+{% endblock %}

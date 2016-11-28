@@ -3,6 +3,9 @@
   "title": "Rocket Ship",
   "language": "en",
   "plugins": ["disqus"],
+  "styles": {
+    "website": "styles/website.css"
+  },
   "pluginsConfig": {
     "disqus": {
       "shortName": "rship"
