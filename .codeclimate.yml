@@ -6,3 +6,4 @@ ratings:
     - cli/**
 exclude_paths:
   - "docs/"
+  - "cli/__tests__/"
