@@ -19,9 +19,10 @@ module.exports = function(config = {}) {
   const screen = blessed.screen({
     smartCSR: true,
     dockBorders: false,
-    autoPadding: true
+    autoPadding: true,
+    terminal: 'xterm-256color',
+    fullUnicode: true
   });
-
   screen.title = 'Rocket Ship';
 
   // top-left memory block
@@ -30,42 +31,8 @@ module.exports = function(config = {}) {
     content: colors.blue.bold(' Initialize '),
     scrollable: true,
     keys: true,
-    label: colors.green.bold(' Memory: '),
+    label: colors.green.bold(' Usage: '),
     vi: true,
-    alwaysScroll: true,
-    scrollbar: {
-      ch: ' ',
-      bg: 'blue'
-    },
-    padding: 1,
-    style: {
-      fg: 'white',
-      border: {
-        fg: 'blue'
-      }
-    },
-    border: {
-      type: 'line'
-    },
-    width: '49%',
-    height: '10%',
-    left: 0,
-    top: '0%'
-  });
-
-  // top-right cpu block
-  const cpuBlock = blessed.box({
-    parent: screen,
-    content: colors.blue.bold(' Initialize '),
-    scrollable: true,
-    keys: true,
-    label: colors.green.bold(' CPU: '),
-    vi: true,
-    alwaysScroll: true,
-    scrollbar: {
-      ch: ' ',
-      bg: 'blue'
-    },
     padding: 1,
     style: {
       fg: 'white',
@@ -77,32 +44,9 @@ module.exports = function(config = {}) {
       type: 'line'
     },
     width: '50%',
-    height: '10%',
-    right: 0,
-    top: '0%'
-  });
-
-  // compiling info block
-  const compilingBlock = blessed.box({
-    parent: screen,
-    scrollable: true,
-    keys: true,
-    label: colors.green.bold(' Webpack: '),
-    content: colors.blue.bold(' Initialize '),
-    padding: 1,
-    style: {
-      fg: 'white',
-      border: {
-        fg: 'blue'
-      }
-    },
-    border: {
-      type: 'line'
-    },
-    width: '49%',
-    height: '10%',
+    height: 7,
     left: 0,
-    top: '10%'
+    top: '0%'
   });
 
   // active processes block
@@ -110,7 +54,7 @@ module.exports = function(config = {}) {
     parent: screen,
     scrollable: true,
     keys: true,
-    label: colors.green.bold(' Active process: '),
+    label: colors.green.bold(' Process: '),
     content: colors.blue.bold(' Initialize '),
     padding: 1,
     style: {
@@ -123,9 +67,9 @@ module.exports = function(config = {}) {
       type: 'line'
     },
     width: '50%',
-    height: '10%',
+    height: 7,
     right: 0,
-    top: '10%'
+    top: 0
   });
 
   // logs block
@@ -134,9 +78,8 @@ module.exports = function(config = {}) {
     scrollable: true,
     label: colors.green.bold(' Logs: '),
     width: '100%',
-    height: '81%',
     left: 0,
-    bottom: 0,
+    top: 7,
     padding: {
       top: 1,
       left: 2
@@ -177,8 +120,6 @@ module.exports = function(config = {}) {
 
   // scope of screens
   return {
-    memoryBlock,        cpuBlock,   compilingBlock,
-    activeProcessBlock, logsBlock,
-    screen
+    memoryBlock, activeProcessBlock, logsBlock, screen
   };
 };

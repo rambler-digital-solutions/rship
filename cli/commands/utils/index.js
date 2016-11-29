@@ -6,6 +6,7 @@
 const fs            = require('fs');
 const http          = require('http');
 const colors        = require('colors');
+const util          = require('util');
 const childProcess  = require('child_process');
 const logger        = require('../../libs/logger');
 
@@ -116,7 +117,26 @@ const exec = (command, opts, cb = () => {}, isSync = false, print = false) => {
     : null;
 
   return execCommand;
-}
+};
+
+
+/**
+ * Logger data formatter
+ * @param  {[type]} data [description]
+ * @return {[type]}      [description]
+ */
+const logFormat = data => {
+  let formatedMessage;
+
+  data.err
+    ? formatedMessage = data.err.join('\n')
+    : formatedMessage = util.inspect(data, { showHidden: true, depth: 5 })
+  
+  return formatedMessage;
+};
+
+
+// util.inspect(msg.data, { showHidden: true, depth: 5 })
 
 // ======================
 // Export functions
@@ -128,3 +148,4 @@ module.exports.checkFile        = checkFile;
 module.exports.checkInstance    = checkInstance;
 module.exports.makeCommand      = makeCommand;
 module.exports.exec             = exec;
+module.exports.logFormat        = logFormat;

@@ -43,7 +43,7 @@ ServerCompiler.prototype.start = function(devScreen) {
   let serverFile = path.join(config.build.server.path, config.build.server.file);
 
   // get avaliable screens from blessed container
-  let { memoryBlock, cpuBlock, compilingBlock, activeProcessBlock, logsBlock, screen } = devScreen;
+  let { memoryBlock, activeProcessBlock, logsBlock, screen } = devScreen;
 
   // define workers object
   // all changes will execute at separated process
@@ -83,29 +83,30 @@ ServerCompiler.prototype.start = function(devScreen) {
     }).on('online', cb);
 
     cluster.workers[worker.id].on('message', (msg) => {
+      let { data } = msg;
       switch (msg.type) {
-        case 'error' : utils.log(logsBlock, `ERROR: ${util.inspect(msg.data, { showHidden: true, depth: 5 })}`, 'red'); break;
+        case 'error' : utils.log(logsBlock, `ERROR: ${utils.logFormat(data)}`, 'red'); break;
         case 'log' : utils.log(logsBlock,   `LOG: ${util.inspect(msg.data, { showHidden: true, depth: 5  })}`, 'yellow'); break;
         case 'warn' : utils.log(logsBlock,  `WARN: ${util.inspect(msg.data, { showHidden: true, depth: 5 })}`, 'magenta'); break;
         case 'info' : utils.log(logsBlock,  `INFO: ${util.inspect(msg.data, { showHidden: true, depth: 5 })}`, 'blue'); break;
         case 'active-worker-usage': {
           let memoryBoxContent = [
+            `${colors.yellow('CPU')}: ${msg.data.cpuPersents.toFixed(2)}%`,
             `${colors.yellow('Heap Total')}: ${utils.toUnits(msg.data.memory.heapTotal)}`,
             `${colors.yellow('Heap Used')}: ${utils.toUnits(msg.data.memory.heapUsed)}`
           ].join('\n');
 
-          let cpuBoxContent = [
-            `${colors.yellow('Spent')}: ${(msg.data.cpu.user / 1024).toFixed(2)} ms`,
-            `${colors.yellow('Usage')}: ${(msg.data.cpuPersents).toFixed(2)} %`
-          ].join('\n');
-
-          activeProcessBlock.setContent(`${colors.yellow('Real PID')}: ${msg.data.pid} \n${colors.yellow('Uptime')}: ${msg.data.uptime.toFixed(0)} sec`);
+          let activeProcessBoxContent = [
+            `${colors.yellow('Real PID')}: ${msg.data.pid}`,
+            `${colors.yellow('Current PID')}: ${workers.main.id}`,
+            `${colors.yellow('Uptime')}: ${msg.data.uptime.toFixed(0)} sec`
+          ].join('\n');          
 
           // set memory block content
           memoryBlock.setContent(memoryBoxContent);
 
-          // set CPU block content
-          cpuBlock.setContent(cpuBoxContent);
+          // set active process block content
+          activeProcessBlock.setContent(activeProcessBoxContent);
 
           // re render screen window
           screen.render();
@@ -169,13 +170,6 @@ ServerCompiler.prototype.start = function(devScreen) {
         });
       }
     }
-
-    let boxContent = [
-      `${colors.cyan('Server')}: ${stats.hash}`,
-      `${colors.red('Errors')}: ${statistic.errors.length}`
-    ].join('\n');
-
-    compilingBlock.setContent(boxContent);
 
     screen.render();
     return true;

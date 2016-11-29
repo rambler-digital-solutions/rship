@@ -13,7 +13,6 @@ const colors = require('colors');
  * @param  {object}   config  [description]
  * @return {boolean}
  */
-
 const cmd = (program, config) => {
   program
     .command('install [packages...]')

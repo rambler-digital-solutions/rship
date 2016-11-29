@@ -89,7 +89,7 @@ module.exports = function(config) {
           lineOffset: 1,
           columnOffset: 1,
           displayErrors: true,
-          timeout: 1000
+          timeout: 300
         });
 
         // override console context
