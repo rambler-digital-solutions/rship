@@ -34,7 +34,7 @@ ServerCompiler.prototype.start = function(devScreen) {
   let serverConfig = require(config.webpack.server)(config);
 
   // push modules directories
-  serverConfig.resolve.modulesDirectories.push(`${cwd}/node_modules`);
+  serverConfig.resolve.modules.push(`${cwd}/node_modules`);
 
   // prepare separated webpack instances
   let serverCompiler = webpack(serverConfig);
@@ -60,8 +60,8 @@ ServerCompiler.prototype.start = function(devScreen) {
     }
 
     if (lastVersion > currentVersion ) {
-      utils.log(logsBlock, `SHIP: Is outdated, current version is: ${currentVersion}, last version is: ${lastVersion}`, 'red'); 
-      utils.log(logsBlock, `SHIP: Please update @see https://rambler-digital-solutions.github.io/rship/en/parts/update.html`, 'red'); 
+      utils.log(logsBlock, `SHIP: Is outdated, current version is: ${currentVersion}, last version is: ${lastVersion}`, 'red');
+      utils.log(logsBlock, `SHIP: Please update @see https://rambler-digital-solutions.github.io/rship/en/parts/update.html`, 'red');
     }
   });
 
@@ -100,7 +100,7 @@ ServerCompiler.prototype.start = function(devScreen) {
             `${colors.yellow('Real PID')}: ${msg.data.pid}`,
             `${colors.yellow('Current PID')}: ${workers.main.id}`,
             `${colors.yellow('Uptime')}: ${msg.data.uptime.toFixed(0)} sec`
-          ].join('\n');          
+          ].join('\n');
 
           // set memory block content
           memoryBlock.setContent(memoryBoxContent);

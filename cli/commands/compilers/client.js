@@ -28,7 +28,7 @@ ClientCompiler.prototype.start = function(devScreen) {
   const { cwd }       = config;
   const clientConfig  = require(config.webpack.client)(config);
   const compiler      = webpack(clientConfig);
-  
+
   // get avaliable screens from blessed container
   let { memoryBlock, cpuBlock, compilingBlock, activeProcessBlock, logsBlock, screen } = devScreen;
 
@@ -50,8 +50,7 @@ ClientCompiler.prototype.start = function(devScreen) {
     contentBase: config.build.client.path,
     hot: true,
     inline: true,
-    colors: true,
-    info: false,
+    noInfo: true,
     quiet: true
   });
 
