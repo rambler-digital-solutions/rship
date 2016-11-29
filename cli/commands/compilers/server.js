@@ -86,9 +86,9 @@ ServerCompiler.prototype.start = function(devScreen) {
       let { data } = msg;
       switch (msg.type) {
         case 'error' : utils.log(logsBlock, `ERROR: ${utils.logFormat(data)}`, 'red'); break;
-        case 'log' : utils.log(logsBlock,   `LOG: ${util.inspect(msg.data, { showHidden: true, depth: 5  })}`, 'yellow'); break;
-        case 'warn' : utils.log(logsBlock,  `WARN: ${util.inspect(msg.data, { showHidden: true, depth: 5 })}`, 'magenta'); break;
-        case 'info' : utils.log(logsBlock,  `INFO: ${util.inspect(msg.data, { showHidden: true, depth: 5 })}`, 'blue'); break;
+        case 'log' : utils.log(logsBlock,   `LOG: ${utils.logFormat(data)}`, 'yellow'); break;
+        case 'warn' : utils.log(logsBlock,  `WARN: ${utils.logFormat(data)}`, 'magenta'); break;
+        case 'info' : utils.log(logsBlock,  `INFO: ${utils.logFormat(data)}`, 'blue'); break;
         case 'active-worker-usage': {
           let memoryBoxContent = [
             `${colors.yellow('CPU')}: ${msg.data.cpuPersents.toFixed(2)}%`,

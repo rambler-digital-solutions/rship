@@ -71,4 +71,9 @@ describe('utils', () => {
     expect(utils.exec('ls | grep package', {}, () => {}, true, true).toString()).to.be.a('string').equal('package.json\n');
   });
 
+  it('logFormat()', () => {
+    expect(utils.logFormat({ err: ['1', '2'] })).to.be.a('string');
+    expect(utils.logFormat({ test: 11, a: { b: 1} })).to.equal('{ test: 11, a: { b: 1 } }');
+  });
+
 });
