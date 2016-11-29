@@ -50,7 +50,9 @@ module.exports = function(__CWD, __ROOT, __ENV) {
     //
   }
 
-  const { version, description } = packageJson;
+  // get versions and description
+  const version     = packageJson.version || '0.0.1';
+  const description = packageJson.description || 'RSHIP';
 
   // ======================
   // Base config
