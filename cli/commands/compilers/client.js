@@ -22,24 +22,15 @@ const ClientCompiler = function(config) {
  * Start
  * @return {[type]} [description]
  */
-ClientCompiler.prototype.start = function(devScreen) {
+ClientCompiler.prototype.start = function(devScreen, ws) {
   // define local variables
-  const config        = this.config;
+  const { config }    = this;
   const { cwd }       = config;
   const clientConfig  = require(config.webpack.client)(config);
   const compiler      = webpack(clientConfig);
-  
+
   // get avaliable screens from blessed container
   let { memoryBlock, cpuBlock, compilingBlock, activeProcessBlock, logsBlock, screen } = devScreen;
-
-  // add entry point for
-  clientConfig.entry.app
-    .unshift(
-      `${cwd}/node_modules/webpack-dev-server/client?http://` +
-        config.development.client.host + ':' +
-        config.development.client.port,
-      `${cwd}/node_modules/webpack/hot/only-dev-server`
-    );
 
   // Add client public path. Exam => http://localhost:8090/assets/
   clientConfig.output.publicPath =
@@ -48,7 +39,6 @@ ClientCompiler.prototype.start = function(devScreen) {
   // dev server
   let server = new DevServer(compiler, {
     contentBase: config.build.client.path,
-    hot: true,
     inline: true,
     colors: true,
     info: false,
@@ -62,6 +52,7 @@ ClientCompiler.prototype.start = function(devScreen) {
       statistic.errors.forEach(error => {
         utils.log(logsBlock, 'SHIP: Webpack->Client->Error: ' + error, 'red');
       });
+      ws.send({ recompile: false, side: 'client', errors: statistic.errors, warnings: [] });
       return false;
     }
 
@@ -69,10 +60,13 @@ ClientCompiler.prototype.start = function(devScreen) {
       statistic.warnings.forEach(warn => {
         utils.log(logsBlock, 'SHIP: Webpack->Client->Warning: ' + warn, 'magenta');
       });
+      ws.send({ recompile: false, side: 'client', errors: [], warnings: statistic.warnings });
       return false;
     } else {
       utils.log(logsBlock, 'SHIP: Webpack->Client->Hash: ' + statistic.hash, 'green');
+      ws.send({ recompile: true, side: 'client', errors: [], warnings: [] });
     }
+
   });
 
   // listen

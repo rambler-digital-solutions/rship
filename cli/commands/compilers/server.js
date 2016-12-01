@@ -23,9 +23,9 @@ const ServerCompiler = function(config) {
  * Start
  * @return {[type]} [description]
  */
-ServerCompiler.prototype.start = function(devScreen) {
-  const config = this.config;
-  const { dir, cwd } = config;
+ServerCompiler.prototype.start = function(devScreen, ws) {
+  const { config }    = this;
+  const { dir, cwd }  = config;
 
   // define mmemory fs
   let fs = new MemoryFS();
@@ -76,6 +76,14 @@ ServerCompiler.prototype.start = function(devScreen) {
    * @return {[type]}      [description]
    */
   let createWorker = function(cb = function() {}) {
+    // define colors by message type
+    let messageTypesColors = {
+      log: 'yellow',
+      info: 'blue',
+      warn: 'magenta',
+      error: 'red'
+    };
+
     // processes content
     let worker = cluster.fork({
       NODE_ENV: 'development',
@@ -83,12 +91,18 @@ ServerCompiler.prototype.start = function(devScreen) {
     }).on('online', cb);
 
     cluster.workers[worker.id].on('message', (msg) => {
-      let { data } = msg;
+
+      let { data }  = msg;
       switch (msg.type) {
-        case 'error' : utils.log(logsBlock, `ERROR: ${utils.logFormat(data)}`, 'red'); break;
-        case 'log' : utils.log(logsBlock,   `LOG: ${utils.logFormat(data)}`, 'yellow'); break;
-        case 'warn' : utils.log(logsBlock,  `WARN: ${utils.logFormat(data)}`, 'magenta'); break;
-        case 'info' : utils.log(logsBlock,  `INFO: ${utils.logFormat(data)}`, 'blue'); break;
+
+        // some console messages
+        case 'log':
+        case 'warn':
+        case 'info':
+        case 'error':
+          utils.log( logsBlock, `${msg.type.toUpperCase()}: ${utils.logFormat(data)}`, messageTypesColors[msg.type] );
+        break;
+
         case 'active-worker-usage': {
           let memoryBoxContent = [
             `${colors.yellow('CPU')}: ${msg.data.cpuPersents.toFixed(2)}%`,
@@ -134,6 +148,8 @@ ServerCompiler.prototype.start = function(devScreen) {
       statistic.errors.forEach(error => {
         utils.log(logsBlock, 'SHIP: Webpack->Server->Error: ' + error, 'red');
       });
+
+      ws.send({ recompile: false, side: 'server', errors: statistic.errors, warnings: [] });
       return false;
     }
 
@@ -141,6 +157,7 @@ ServerCompiler.prototype.start = function(devScreen) {
       statistic.warnings.forEach(warn => {
         utils.log(logsBlock, 'SHIP: Webpack->Server->Warning: ' + warn, 'magenta');
       });
+      ws.send({ recompile: false, side: 'server', errors: [], warnings: statistic.warnings });
       return false;
     } else {
       utils.log(logsBlock, 'SHIP: Webpack->Server->Hash: ' + statistic.hash, 'green');
@@ -166,6 +183,7 @@ ServerCompiler.prototype.start = function(devScreen) {
         workers.main.send(sourceCode, () => {
           workers.temp = createWorker(() => {
             utils.log(logsBlock, 'SHIP: created temp worker PID#' + workers.temp.id, 'white');
+            ws.send({ recompile: true, side: 'server', errors: [], warnings: [] });
           });
         });
       }
