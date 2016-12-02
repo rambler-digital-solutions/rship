@@ -6,12 +6,13 @@
 [![Test Coverage](https://codeclimate.com/github/rambler-digital-solutions/rship/badges/coverage.svg)](https://codeclimate.com/github/rambler-digital-solutions/rship/coverage)
 [![Code Climate](https://codeclimate.com/github/rambler-digital-solutions/rship/badges/gpa.svg)](https://codeclimate.com/github/rambler-digital-solutions/rship)
 
-**RSHIP** *(Rocket Ship)* – simple and effective tool for developing and building isimorphic web application.
+
+**RSHIP** *(Rocket Ship)* – tool for developing and building isimorphic web application.
 
 Current appilcation is **CLI** (Command Line Interface) which avaliable by ```$ rship```
 
-## [Documentation](https://rambler-digital-solutions.github.io/rship/)
 
+## [Documentation](https://rambler-digital-solutions.github.io/rship/)
 
 ## [Installation](https://github.com/rambler-digital-solutions/rship/blob/master/docs/en/docs/parts/installation.md)
 ```bash
@@ -42,100 +43,27 @@ Usage: rship [options] [command]
 
 ```
 
+## How is it works?
+
+# <img src='https://github.com/rambler-digital-solutions/rship/blob/master/docs/styles/images/rship_roadmap.svg?raw=true'/>
+
 ## Initialize application
 When **RSHIP** has been istalled, CLI is ready for creating application from [boilerplate](https://github.com/mrsum/rship-boilerplate)
 ```bash
 $ rship new application_name # rship n applciation_name
 ```
-```bash
-16:12:17 App will create at: /Users/foo/code/application_name
-yarn install v0.17.2
-info No lockfile found.
-[1/4] Resolving packages...
-[2/4] Fetching packages...
-[3/4] Linking dependencies...
-[4/4] Building fresh packages...
-success Saved lockfile.
-Done in 13.07s.
-
-$ cd application_name
-```
 
 ## [Developing](https://github.com/rambler-digital-solutions/rship/blob/master/docs/en/docs/parts/development.md)
 ```bash
-$ cd /Users/foo/code/application_folder
+$ cd /Users/foo/code/application_name
 $ rship run dev
 ```
 
 ## [Building](https://github.com/rambler-digital-solutions/rship/blob/master/docs/en/docs/parts/building.md)
 ```bash
-$ cd /Users/foo/code/application_folder
+$ cd /Users/foo/code/application_name
 $ rship run build
 ```
 
-## Install package(s)
-```bash
-$ cd /Users/foo/code/application_folder
-$ rship setup     # without node_modules folder remove
-```
-```bash
-16:30:06 Please be patient
-16:30:06 Installing dependencies
-16:30:06 Success
-yarn install v0.17.2
-[1/4] Resolving packages...
-success Already up-to-date.
-Done in 0.63s.
-```
-
-```bash
-$ cd /Users/foo/code/application_folder
-$ rship setup -f  # with node_modules folder remove
-```
-```bash
-16:30:26 Please be patient
-16:30:26 Removing client node_modules
-16:30:28 Installing dependencies
-16:30:28 Success
-yarn install v0.17.2
-[1/4] Resolving packages...
-[2/4] Fetching packages...
-[3/4] Linking dependencies...
-[4/4] Building fresh packages...
-Done in 9.89s.
-```
-
-## Add package
-```bash
-$ cd /Users/foo/code/application_folder
-$ rship install moment
-```
-```bash
-16:15:32 Please be patient
-yarn add v0.17.2
-[1/4] Resolving packages...
-[2/4] Fetching packages...
-[3/4] Linking dependencies...
-[4/4] Building fresh packages...
-success Saved lockfile.
-success Saved 1 new dependency
-└─ moment@2.16.0
-Done in 5.01s.
-```
-
-
-## Remove package
-```bash
-$ cd /Users/foo/code/application_folder
-$ rship remove moment
-```
-```bash
-16:15:48 Please be patient
-yarn remove v0.17.2
-[1/2] Removing module moment...
-[2/2] Regenerating lockfile and installing missing dependencies...
-success Uninstalled packages.
-Done in 4.93s.
-```
 
 ##### MIT [Rambler Digital Solutions](https://github.com/rambler-digital-solutions) (2016)
