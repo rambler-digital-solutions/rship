@@ -7,10 +7,22 @@
 [![Code Climate](https://codeclimate.com/github/rambler-digital-solutions/rship/badges/gpa.svg)](https://codeclimate.com/github/rambler-digital-solutions/rship)
 
 
-**RSHIP** *(Rocket Ship)* – tool for developing and building isimorphic web application.
+**RSHIP** *(Rocket Ship)* – **tool** for developing and building isimorphic web application.
 
-Current appilcation is **CLI** (Command Line Interface) which avaliable by ```$ rship```
+## Goals
+- Fast recompiling and starting node.js webserver processes;
+- Livereload over separated ports (html/(css/client js/images));
+- Source code runing from RAM;
+- And compiling from RAM also;
+- No pain with iterateble stop/run node.js server;
+- Has instruments for debugging server side code;
+- Has cpu and ram usage metrics;
 
+## How is it works?
+
+# <img src='https://rambler-digital-solutions.github.io/rship/styles/images/rship_roadmap.svg'/>
+
+[![asciicast](https://asciinema.org/a/0k7tkffggic88se3utojygyik.png)](https://asciinema.org/a/0k7tkffggic88se3utojygyik)
 
 ## [Documentation](https://rambler-digital-solutions.github.io/rship/)
 
@@ -42,10 +54,6 @@ Usage: rship [options] [command]
     -V, --version  output the version number
 
 ```
-
-## How is it works?
-
-# <img src='https://github.com/rambler-digital-solutions/rship/blob/master/docs/styles/images/rship_roadmap.svg?raw=true'/>
 
 ## Initialize application
 When **RSHIP** has been istalled, CLI is ready for creating application from [boilerplate](https://github.com/mrsum/rship-boilerplate)
