@@ -6,31 +6,57 @@
 [![Test Coverage](https://codeclimate.com/github/rambler-digital-solutions/rship/badges/coverage.svg)](https://codeclimate.com/github/rambler-digital-solutions/rship/coverage)
 [![Code Climate](https://codeclimate.com/github/rambler-digital-solutions/rship/badges/gpa.svg)](https://codeclimate.com/github/rambler-digital-solutions/rship)
 
-
-**RSHIP** *(Rocket Ship)* – **tool** for developing and building isimorphic web application.
-
-## Goals
-- Fast recompiling and starting node.js webserver processes;
-- Livereload over separated ports (html/(css/client js/images));
-- Source code runing from RAM;
-- And compiling from RAM also;
-- No pain with iterateble stop/run node.js server;
-- Has instruments for debugging server side code;
-- Has cpu and ram usage metrics;
-
-## How is it works?
-
-# <img src='https://rambler-digital-solutions.github.io/rship/styles/images/rship_roadmap.svg'/>
+## TL;DR
+**RSHIP** *(Rocket Ship)* – isn't boilerplate. It's a **tool** for developing and building isimorphic web applications.
 
 [![asciicast](https://asciinema.org/a/0k7tkffggic88se3utojygyik.png)](https://asciinema.org/a/0k7tkffggic88se3utojygyik)
 
-## [Documentation](https://rambler-digital-solutions.github.io/rship/)
+
+## Goals
+- No pain with iterable stop/run node.js server;
+- Fast recompiling and starting node.js webserver processes;
+- Livereload over separated ports (**html** / **(css/client js/images)**);
+- Source code compiling and running from **RAM** over **MemoryFS**;
+- Has instruments for debugging server side code;
+- Has CPU and RAM usage metrics;
+- Can works globally and locally as part of your project;
 
 ## [Installation](https://github.com/rambler-digital-solutions/rship/blob/master/docs/en/docs/parts/installation.md)
 ```bash
 $ npm i rship -g          # via npm
-$ yarn add rship --global # via yarn
+$ yarn global add rship   # via yarn, !can be problems!
 ```
+
+## Initialize application
+When **RSHIP** has been istalled, CLI is ready for creating application from [DEFAULT BOILERPLATE](https://github.com/mrsum/rship-boilerplate)
+```bash
+$ rship new application_name # rship n applciation_name
+```
+
+## [Default boilerplate](https://github.com/mrsum/rship-boilerplate)
+
+#### Contains
+- [React](https://facebook.github.io/react/) as view engine;
+- [Redux](https://github.com/reactjs/redux) as state container;
+- [Webpack](https://webpack.github.io/) as compiler of client and server codebase;
+- [Stylus](http://stylus-lang.com/) as style pre-processor;
+- [CSSModules](https://github.com/css-modules/css-modules);
+- [axios](https://github.com/mzabriskie/axios) as HTTP client;
+- [Koa 2.0](http://koajs.com/) as http web server;
+- [Jest](https://facebook.github.io/jest/) as testing framework.
+
+#### Goals
+- Server Side Rendering;
+- SEO compability;
+- Similar codebase over all project;
+- Performance;
+- Maintainability;
+
+## How is it works?
+# <img src='https://rambler-digital-solutions.github.io/rship/styles/images/rship_roadmap.svg'/>
+
+## [Documentation](https://rambler-digital-solutions.github.io/rship/)
+
 
 ## CLI
 ```bash
@@ -55,23 +81,16 @@ Usage: rship [options] [command]
 
 ```
 
-## Initialize application
-When **RSHIP** has been istalled, CLI is ready for creating application from [boilerplate](https://github.com/mrsum/rship-boilerplate)
-```bash
-$ rship new application_name # rship n applciation_name
-```
-
 ## [Developing](https://github.com/rambler-digital-solutions/rship/blob/master/docs/en/docs/parts/development.md)
 ```bash
 $ cd /Users/foo/code/application_name
 $ rship run dev
 ```
 
-## [Building](https://github.com/rambler-digital-solutions/rship/blob/master/docs/en/docs/parts/building.md)
+## [Building globally](https://github.com/rambler-digital-solutions/rship/blob/master/docs/en/docs/parts/building.md)
 ```bash
 $ cd /Users/foo/code/application_name
 $ rship run build
 ```
-
 
 ##### MIT [Rambler Digital Solutions](https://github.com/rambler-digital-solutions) (2016)
