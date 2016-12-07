@@ -23,7 +23,7 @@ const ServerCompiler = function(config) {
  * Start
  * @return {[type]} [description]
  */
-ServerCompiler.prototype.start = function(devScreen, ws) {
+ServerCompiler.prototype.start = function(devScreen) {
   const { config }    = this;
   const { dir, cwd }  = config;
 
@@ -148,8 +148,6 @@ ServerCompiler.prototype.start = function(devScreen, ws) {
       statistic.errors.forEach(error => {
         utils.log(logsBlock, 'SHIP: Webpack->Server->Error: ' + error, 'red');
       });
-
-      ws.send({ recompile: false, side: 'server', errors: statistic.errors, warnings: [] });
       return false;
     }
 
@@ -157,7 +155,6 @@ ServerCompiler.prototype.start = function(devScreen, ws) {
       statistic.warnings.forEach(warn => {
         utils.log(logsBlock, 'SHIP: Webpack->Server->Warning: ' + warn, 'magenta');
       });
-      ws.send({ recompile: false, side: 'server', errors: [], warnings: statistic.warnings });
       return false;
     } else {
       utils.log(logsBlock, 'SHIP: Webpack->Server->Hash: ' + statistic.hash, 'green');
@@ -183,7 +180,6 @@ ServerCompiler.prototype.start = function(devScreen, ws) {
         workers.main.send(sourceCode, () => {
           workers.temp = createWorker(() => {
             utils.log(logsBlock, 'SHIP: created temp worker PID#' + workers.temp.id, 'white');
-            ws.send({ recompile: true, side: 'server', errors: [], warnings: [] });
           });
         });
       }

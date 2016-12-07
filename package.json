@@ -1,10 +1,10 @@
 {
   "name": "rship",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Ecosystem for building isomorphic web applications",
   "main": "./cli/index.js",
   "bin": {
-    "rship": "./shigp"
+    "rship": "./ship"
   },
   "scripts": {
     "ci": "mocha ./cli/**/*.spec.js",

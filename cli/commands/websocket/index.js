@@ -19,31 +19,12 @@ const WebsocketServer = function(config) {
 
   // prepapre websocket server
   this.server = ws.createServer(connection => {
-
-    // connection.on('text', str => {});
-
-    // connection.on('close', (code, reason) => {
-    //   // console.log('connection closed')
-    // });
-
     connection.on('error', err => {
       if (err.code !== 'ECONNRESET') {
         throw err
       }
     });
-
   }).listen(this.config.port);
-};
-
-/**
- * Send message to websokect
- * @param  {[type]} msg [description]
- * @return {[type]}     [description]
- */
-WebsocketServer.prototype.send = function(msg) {
-  this.server.connections.forEach(conn => {
-    conn.send(JSON.stringify(msg));
-  });
 };
 
 module.exports = WebsocketServer;

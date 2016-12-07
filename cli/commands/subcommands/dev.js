@@ -35,8 +35,8 @@ module.exports = function(config) {
 
     // lets start both of compilers
     try {
-      ClientCompiler.start(Screen, WebSocketInstance);
-      ServerCompiler.start(Screen, WebSocketInstance);
+      ClientCompiler.start(Screen);
+      ServerCompiler.start(Screen);
     } catch (err) {
       console.error(err);
     }
@@ -113,7 +113,7 @@ module.exports = function(config) {
         script.runInNewContext({
           module, console, require,
           process, __dirname, __filename,
-          setTimeout, setInterval, Error
+          setTimeout, setInterval, Error, global
         });
 
         // stop temporary process interval

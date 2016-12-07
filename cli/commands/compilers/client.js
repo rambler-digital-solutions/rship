@@ -22,7 +22,7 @@ const ClientCompiler = function(config) {
  * Start
  * @return {[type]} [description]
  */
-ClientCompiler.prototype.start = function(devScreen, ws) {
+ClientCompiler.prototype.start = function(devScreen) {
   // define local variables
   const { config }    = this;
   const { cwd }       = config;
@@ -52,7 +52,6 @@ ClientCompiler.prototype.start = function(devScreen, ws) {
       statistic.errors.forEach(error => {
         utils.log(logsBlock, 'SHIP: Webpack->Client->Error: ' + error, 'red');
       });
-      ws.send({ recompile: false, side: 'client', errors: statistic.errors, warnings: [] });
       return false;
     }
 
@@ -60,11 +59,9 @@ ClientCompiler.prototype.start = function(devScreen, ws) {
       statistic.warnings.forEach(warn => {
         utils.log(logsBlock, 'SHIP: Webpack->Client->Warning: ' + warn, 'magenta');
       });
-      ws.send({ recompile: false, side: 'client', errors: [], warnings: statistic.warnings });
       return false;
     } else {
       utils.log(logsBlock, 'SHIP: Webpack->Client->Hash: ' + statistic.hash, 'green');
-      ws.send({ recompile: true, side: 'client', errors: [], warnings: [] });
     }
 
   });
