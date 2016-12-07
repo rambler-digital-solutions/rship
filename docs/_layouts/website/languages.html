@@ -12,7 +12,9 @@
     </div>
 
     <div class="logo">
-      <img src="https://rambler-digital-solutions.github.io/rship/styles/images/logo.svg" alt="">
+      <a href="https://github.com/rambler-digital-solutions/rship">
+        <img src="https://rambler-digital-solutions.github.io/rship/styles/images/logo.svg" alt="">
+      </a>
     </div>
 
     <div class="title">
@@ -20,7 +22,7 @@
     </div>
 
     <div class="inner">
-      <a href='/en' class='link'>Documentation</a>
+      <a href="{{ ("en" + "/README.md")|contentURL }}"" class='link'>Documentation</a>
       <a href="https://www.npmjs.com/package/rship">
         <img src="https://badge.fury.io/js/rship.svg" alt="npm package">
       </a>
@@ -30,11 +32,6 @@
       <script type="text/javascript" src="https://asciinema.org/a/94353.js" id="asciicast-94353" async></script>
     </div>
 
-
-    <footer>
-      
-      
-    </footer>
   </div>
 </div>
 {% endblock %}
