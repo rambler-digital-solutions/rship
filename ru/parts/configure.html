@@ -1,0 +1,361 @@
+
+<!DOCTYPE HTML>
+<html lang="ru" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Конфигурация · Rocket Ship</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-disqus/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="requirments.html" />
+    
+    
+    <link rel="prev" href="installation.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Введите условия поиска" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Возможности
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="installation.html">
+            
+                <a href="installation.html">
+            
+                    
+                    Установка
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3" data-path="configure.html">
+            
+                <a href="configure.html">
+            
+                    
+                    Конфигурация
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="requirments.html">
+            
+                <a href="requirments.html">
+            
+                    
+                    Зависимости
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="development.html">
+            
+                <a href="development.html">
+            
+                    
+                    Разработка
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="building.html">
+            
+                <a href="building.html">
+            
+                    
+                    Сборка
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Опубликовано с помощью GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Конфигурация</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="rship--&#x43A;&#x43E;&#x43D;&#x444;&#x438;&#x433;&#x443;&#x440;&#x438;&#x440;&#x43E;&#x432;&#x430;&#x43D;&#x438;&#x435;">RSHIP / &#x41A;&#x43E;&#x43D;&#x444;&#x438;&#x433;&#x443;&#x440;&#x438;&#x440;&#x43E;&#x432;&#x430;&#x43D;&#x438;&#x435;</h1>
+<p>&#x412; &#x43A;&#x43E;&#x440;&#x43D;&#x435; &#x43F;&#x440;&#x438;&#x43B;&#x43E;&#x436;&#x435;&#x43D;&#x438;&#x44F;, &#x441;&#x43E;&#x437;&#x434;&#x430;&#x439;&#x442;&#x435; &#x43D;&#x43E;&#x432;&#x44B;&#x439; &#x444;&#x430;&#x439;&#x43B; <code>ship.config.js</code></p>
+<pre><code class="lang-javascript">
+<span class="hljs-comment">// current process path</span>
+<span class="hljs-keyword">const</span> __root = process.cwd();
+
+<span class="hljs-comment">// ------------------------------</span>
+<span class="hljs-comment">// Application config</span>
+<span class="hljs-comment">// ------------------------------</span>
+<span class="hljs-built_in">module</span>.exports = {
+  name: <span class="hljs-string">&apos;rship-sample&apos;</span>,
+  version: <span class="hljs-string">&apos;0.0.1&apos;</span>,
+  description: <span class="hljs-string">&apos;My isomorphic application&apos;</span>,
+
+  <span class="hljs-comment">// &#x41F;&#x443;&#x442;&#x438; &#x434;&#x43E; &#x43A;&#x43E;&#x43D;&#x444;&#x438;&#x433;&#x443;&#x440;&#x430;&#x446;&#x438;&#x439; webpack</span>
+  webpack: {
+    client: __root + <span class="hljs-string">&apos;/config/webpack/client.config.js&apos;</span>,
+    server: __root + <span class="hljs-string">&apos;/config/webpack/server.config.js&apos;</span>
+  },
+
+  <span class="hljs-comment">// &#x414;&#x43E;&#x441;&#x442;&#x443;&#x43F;&#x43D;&#x44B;&#x435; &#x430;&#x43B;&#x438;&#x430;&#x441;&#x44B;</span>
+  aliases: {
+    _config: __root + <span class="hljs-string">&apos;/ship.config.js&apos;</span>,
+    _server: __root + <span class="hljs-string">&apos;/app/server&apos;</span>,
+    _client: __root + <span class="hljs-string">&apos;/app/client&apos;</span>,
+    _shared: __root + <span class="hljs-string">&apos;/app/shared&apos;</span>
+  },
+
+  <span class="hljs-comment">// &#x421;&#x435;&#x43A;&#x446;&#x438;&#x44F; &#x440;&#x430;&#x437;&#x440;&#x430;&#x431;&#x43E;&#x442;&#x43A;&#x438;</span>
+  development: {
+    server: {
+      host: <span class="hljs-string">&apos;localhost&apos;</span>,
+      port: <span class="hljs-string">&apos;3001&apos;</span>,
+      file: __root + <span class="hljs-string">&apos;/app/server.js&apos;</span>
+    },
+    client: {
+      host: <span class="hljs-string">&apos;localhost&apos;</span>,
+      port: <span class="hljs-string">&apos;8090&apos;</span>,
+      file: __root + <span class="hljs-string">&apos;/app/client.js&apos;</span>
+    }
+  },
+
+  <span class="hljs-comment">// &quot;&#x411;&#x43E;&#x435;&#x432;&#x43E;&#x433;&#x43E;&quot; &#x43E;&#x43A;&#x440;&#x443;&#x436;&#x435;&#x43D;&#x438;&#x44F;</span>
+  production: {
+    server: {
+      host: <span class="hljs-string">&apos;localhost&apos;</span>,
+      port: <span class="hljs-string">&apos;3000&apos;</span>
+    }
+  },
+
+  <span class="hljs-comment">// &#x41D;&#x430;&#x441;&#x442;&#x440;&#x43E;&#x439;&#x43A;&#x438; &#x441;&#x431;&#x43E;&#x440;&#x43A;&#x438; &#x43F;&#x440;&#x43E;&#x435;&#x43A;&#x442;&#x430;</span>
+  build: {
+    path: __root + <span class="hljs-string">&apos;/dist/&apos;</span>,
+    server: {
+      file: <span class="hljs-string">&apos;server.js&apos;</span>,
+      path: __root + <span class="hljs-string">&apos;/dist/server&apos;</span>
+    },
+    client: {
+      file: <span class="hljs-string">&apos;application.js&apos;</span>,
+      path: __root + <span class="hljs-string">&apos;/dist/client&apos;</span>
+    }
+  }
+};
+</code></pre>
+<h5 id="mit-rambler-digital-solutions-2016">MIT <a href="https://github.com/rambler-digital-solutions" target="_blank">Rambler Digital Solutions</a> (2016)</h5>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="installation.html" class="navigation navigation-prev " aria-label="Previous page: Установка">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="requirments.html" class="navigation navigation-next " aria-label="Next page: Зависимости">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Конфигурация","level":"1.3","depth":1,"next":{"title":"Зависимости","level":"1.4","depth":1,"path":"parts/requirments.md","ref":"parts/requirments.md","articles":[]},"previous":{"title":"Установка","level":"1.2","depth":1,"path":"parts/installation.md","ref":"parts/installation.md","articles":[]},"dir":"ltr"},"config":{"plugins":["disqus"],"root":"/docs/","styles":{"website":"styles/website.css"},"pluginsConfig":{"disqus":{"useIdentifier":false,"shortName":"rship"},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Rocket Ship","language":"ru","gitbook":"*"},"file":{"path":"parts/configure.md","mtime":"2016-11-16T14:10:56.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2016-12-14T12:38:51.129Z"},"basePath":"..","book":{"language":"ru"}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.16.1/URI.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-disqus/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
