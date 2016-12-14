@@ -9,7 +9,7 @@
 ## TL;DR
 **RSHIP** *(Rocket Ship)* – isn't boilerplate. It's a **tool** for developing and building isimorphic web applications.
 
-[![asciicast](https://asciinema.org/a/0k7tkffggic88se3utojygyik.png)](https://asciinema.org/a/0k7tkffggic88se3utojygyik)
+[![asciicast](https://asciinema.org/a/117g7mc8edmxrbyckvh6qk2j9.png)](https://asciinema.org/a/117g7mc8edmxrbyckvh6qk2j9)
 
 
 ## Goals
