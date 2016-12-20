@@ -11,6 +11,7 @@
 
 [![asciicast](https://asciinema.org/a/117g7mc8edmxrbyckvh6qk2j9.png)](https://asciinema.org/a/117g7mc8edmxrbyckvh6qk2j9)
 
+## [Slides](https://s.mrsum.ru/#/slide/rship)
 
 ## Goals
 - No pain with iterable stop/run node.js server;
