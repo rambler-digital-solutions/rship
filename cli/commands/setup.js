@@ -27,7 +27,7 @@ const cmd = function(program, config) {
       // remove node_modules folder is -f / --force option was enabled
       if (options.force) {
         try {
-          logger('Removing client node_modules');
+          logger('Removing client\'s node_modules');
 
           utils.exec(
             `rm -rf ${dir}/node_modules`, // command
@@ -53,7 +53,7 @@ const cmd = function(program, config) {
           true                          // print
         );
       } catch (err) {
-        logger(`${dir} dont has package.json`, 'red');
+        logger(`${dir} doesn't contain package.json`, 'red');
         return false;
       }
       logger('Success');
