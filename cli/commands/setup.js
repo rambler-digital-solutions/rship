@@ -35,7 +35,6 @@ const cmd = function(program, config) {
             null,                         // no callback
             true                          // is sync
           );
-
         } catch (err) {
           logger('Failed', 'red');
           return false;

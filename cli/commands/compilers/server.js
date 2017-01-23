@@ -100,7 +100,7 @@ ServerCompiler.prototype.start = function(devScreen) {
         case 'info':
         case 'error':
           utils.log( logsBlock, `${msg.type.toUpperCase()}: ${utils.logFormat(data)}`, messageTypesColors[msg.type] );
-        break;
+          break;
 
         case 'active-worker-usage': {
           let memoryBoxContent = [

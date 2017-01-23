@@ -5,7 +5,6 @@
 // ======================
 const colors = require('colors');
 const webpack = require('webpack');
-const childProcess = require('child_process');
 const logger = require('../../libs/logger');
 const utils  = require('../utils');
 
@@ -55,7 +54,7 @@ module.exports = function(program, config = {}) {
   // lets send user notice
   logger('SHIP: Start compiling');
   logger('SHIP: Remove old files', 'green');
-  
+
   // prepare folders for compiling
   utils.exec(`rm -rf ${dir}/dist`, { cwd: cwd }, null, true);
   utils.exec(`mkdir ${dir}/dist`, { cwd: cwd }, null, true);

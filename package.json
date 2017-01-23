@@ -1,6 +1,6 @@
 {
   "name": "rship",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Ecosystem for building isomorphic web applications",
   "main": "./cli/index.js",
   "bin": {
@@ -33,18 +33,18 @@
     "blessed": "0.1.81",
     "colors": "1.1.2",
     "commander": "2.9.0",
-    "memory-fs": "^0.4.1",
-    "nodejs-websocket": "^1.7.1",
-    "webpack": "^1.14.0",
+    "memory-fs": "0.4.1",
+    "nodejs-websocket": "1.7.1",
+    "webpack": "1.14.0",
     "webpack-dev-server": "1.16.2",
-    "yarn": "^0.19.1"
+    "yarn": "0.19.1"
   },
   "devDependencies": {
     "chai": "3.5.0",
     "codeclimate-test-reporter": "0.4.0",
-    "eslint-config-rambler": "^0.2.6",
+    "eslint-config-rambler": "0.2.6",
     "istanbul": "0.4.5",
-    "mocha": "^3.2.0",
-    "sinon": "^1.17.7"
+    "mocha": "3.2.0",
+    "sinon": "1.17.7"
   }
 }
