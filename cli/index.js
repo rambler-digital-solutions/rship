@@ -10,10 +10,10 @@ const commands    = require('./commands/');
 
 /**
  * SHIP.CLI
- * @param  {[type]} __CWD  [description]
- * @param  {[type]} __ROOT [description]
- * @param  {[type]} config [description]
- * @return {[type]}        [description]
+ * @param  {string} __CWD  Absolute path for current project
+ * @param  {string} __ROOT Root path of project
+ * @param  {object} config Extandable config
+ * @return {object}
  */
 module.exports = function(__CWD, __ROOT, config) {
   // define program

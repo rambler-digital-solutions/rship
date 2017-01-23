@@ -10,7 +10,7 @@ const Compilers = {
   Client: require('../compilers/client')
 };
 
-const WebSocket = require('../websocket');
+// const WebSocket = require('../websocket');
 
 /**
  * SHIP.run.dev
@@ -19,17 +19,16 @@ const WebSocket = require('../websocket');
  */
 module.exports = function(config) {
   if (cluster.isMaster) {
-
-    // create websocket instance for handling compilation status
-    const WebSocketInstance = new WebSocket({
-      host: config.development.websocket.host || 'localhost',
-      port: config.development.websocket.port || 3002
-    });
+    // // create websocket instance for handling compilation status
+    // const WebSocketInstance = new WebSocket({
+    //   host: config.development.websocket.host || 'localhost',
+    //   port: config.development.websocket.port || 3002
+    // });
 
     // create inctances of compilers in master process
     const ClientCompiler = new Compilers.Client(config);
     const ServerCompiler = new Compilers.Server(config);
-    
+
     // get avaliable screens from blessed container
     const Screen = devScreen(config);
 
@@ -40,9 +39,7 @@ module.exports = function(config) {
     } catch (err) {
       console.error(err);
     }
-
   } else {
-
     /**
      * Send message from child process to master
      * @param  {...[type]} data [description]
@@ -66,7 +63,7 @@ module.exports = function(config) {
           sendMessage.bind({ type: 'error' })(data);
         });
       });
-    
+
     // process usage updater
     const interval = setInterval(function() {
       let message = {
@@ -141,7 +138,6 @@ module.exports = function(config) {
           };
           process.send(message);
         }, 500);
-
       } catch (err) {
         let errorArr = err.stack.split('\n');
         let message = {

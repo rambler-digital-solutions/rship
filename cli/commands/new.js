@@ -55,7 +55,6 @@ const cmd = function(program, config) {
         false,       // no sync
         true         // print
       );
-
     });
 };
 

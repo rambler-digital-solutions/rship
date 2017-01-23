@@ -5,7 +5,6 @@
 // ======================
 const cluster   = require('cluster');
 const path      = require('path');
-const util      = require('util');
 const MemoryFS  = require('memory-fs');
 const colors    = require('colors');
 const webpack   = require('webpack');
@@ -114,7 +113,7 @@ ServerCompiler.prototype.start = function(devScreen) {
             `${colors.yellow('Real PID')}: ${msg.data.pid}`,
             `${colors.yellow('Current PID')}: ${workers.main.id}`,
             `${colors.yellow('Uptime')}: ${msg.data.uptime.toFixed(0)} sec`
-          ].join('\n');          
+          ].join('\n');
 
           // set memory block content
           memoryBlock.setContent(memoryBoxContent);
@@ -188,8 +187,6 @@ ServerCompiler.prototype.start = function(devScreen) {
     screen.render();
     return true;
   });
-
-
 };
 
 module.exports = ServerCompiler;
