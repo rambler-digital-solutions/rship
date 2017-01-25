@@ -82,7 +82,6 @@ const checkInstance = (dir) => {
 };
 
 /**
- * 
  * @param  {[type]} cwd      [description]
  * @param  {String} command  [description]
  * @param  {Array}  packages [description]
