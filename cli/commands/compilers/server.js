@@ -25,6 +25,11 @@ const ServerCompiler = function(config) {
 ServerCompiler.prototype.start = function(devScreen) {
   const { config }    = this;
   const { dir, cwd }  = config;
+  let secrets = {};
+
+  if (config.secrets) {
+    secrets = require(config.secrets);
+  }
 
   // define mmemory fs
   let fs = new MemoryFS();
@@ -84,10 +89,13 @@ ServerCompiler.prototype.start = function(devScreen) {
     };
 
     // processes content
-    let worker = cluster.fork({
-      NODE_ENV: 'development',
-      NODE_PATH: `${dir}/node_modules`
-    }).on('online', cb);
+    let worker = cluster.fork(
+      Object.assign(
+        {},
+        { NODE_ENV: 'development', NODE_PATH: `${dir}/node_modules` },
+        secrets
+      )
+    ).on('online', cb);
 
     cluster.workers[worker.id].on('message', (msg) => {
 

@@ -10,8 +10,6 @@ const Compilers = {
   Client: require('../compilers/client')
 };
 
-// const WebSocket = require('../websocket');
-
 /**
  * SHIP.run.dev
  * @param  {[type]} config [description]
@@ -19,23 +17,30 @@ const Compilers = {
  */
 module.exports = function(config) {
   if (cluster.isMaster) {
-    // // create websocket instance for handling compilation status
-    // const WebSocketInstance = new WebSocket({
-    //   host: config.development.websocket.host || 'localhost',
-    //   port: config.development.websocket.port || 3002
-    // });
+    let ClientCompiler = false;
+    let ServerCompiler = false;
 
     // create inctances of compilers in master process
-    const ClientCompiler = new Compilers.Client(config);
-    const ServerCompiler = new Compilers.Server(config);
+    if (config.webpack.client) {
+      ClientCompiler = new Compilers.Client(config);
+    }
+
+    if (config.webpack.server) {
+      ServerCompiler = new Compilers.Server(config);
+    }
 
     // get avaliable screens from blessed container
     const Screen = devScreen(config);
 
     // lets start both of compilers
     try {
-      ClientCompiler.start(Screen);
-      ServerCompiler.start(Screen);
+      if (ServerCompiler) {
+        ServerCompiler.start(Screen);
+      }
+
+      if (ClientCompiler) {
+        ClientCompiler.start(Screen);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -90,6 +95,7 @@ module.exports = function(config) {
         // depends
         let vm = require('vm');
         let console = {};
+        let logger = {};
 
         // prepare new script context for execution
         let script = new vm.Script(sourceCode, {
@@ -103,14 +109,23 @@ module.exports = function(config) {
         // override console context
         ['log', 'dir', 'warn', 'info', 'error']
           .forEach(type => {
-            console[type] = sendMessage.bind({ type })
+            console[type] = sendMessage.bind({ type });
           });
+
+        // override stdout functions
+        process.stdout.write = function(msg) {
+          sendMessage.bind({ type: 'log' })(msg);
+        };
+        // override stderr functions
+        process.stderr.write = function(msg) {
+          sendMessage.bind({ type: 'error' })(msg);
+        };
 
         // Run source code into new context
         script.runInNewContext({
-          module, console, require,
+          module, console, global, require, logger,
           process, __dirname, __filename,
-          setTimeout, setInterval, Error, global
+          setTimeout, setInterval, Error, Buffer
         });
 
         // stop temporary process interval

@@ -27,7 +27,10 @@ const ClientCompiler = function(config) {
 ClientCompiler.prototype.start = function(devScreen) {
   // define local variables
   const { config }    = this;
+
   const clientConfig  = require(config.webpack.client)(config);
+
+  // prepare webpack compiler
   const compiler      = webpack(clientConfig);
 
   // get avaliable screens from blessed container
