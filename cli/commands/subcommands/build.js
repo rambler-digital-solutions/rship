@@ -21,19 +21,6 @@ const Compilers = {
  */
 module.exports = function(program, config = {}) {
   const { dir, cwd } = config;
-  const ship = [
-    '                                ',
-    '................................',
-    '..####...##..##..######..#####..',
-    '.##......##..##....##....##..##.',
-    '..####...######....##....#####..',
-    '.....##..##..##....##....##.....',
-    '..####...##..##..######..##.....',
-    '................................',
-    '                                '
-  ].join('\n');
-
-  logger(colors.green.bold(ship));
 
   let ClientCompiler = false;
   let ServerCompiler = false;
@@ -82,12 +69,13 @@ module.exports = function(program, config = {}) {
   logger('SHIP: Remove old files', 'green');
 
   // prepare folders for compiling
-  utils.exec(`rm -rf ${dir}/dist`, { cwd: cwd }, null, true);
-  utils.exec(`mkdir ${dir}/dist`, { cwd: cwd }, null, true);
-  
+  utils.exec(`rm -rf ${config.build.path}`, { cwd: cwd }, null, true);
+  utils.exec(`mkdir ${config.build.path}`, { cwd: cwd }, null, true);
+
   if (config.webpack.server) {
-    utils.exec(`mkdir ${dir}/dist/server`, { cwd: cwd }, null, true);
+    utils.exec(`mkdir ${config.build.server.path}`, { cwd: cwd }, null, true);
     let serverCompiler = webpack(serverConfig);
+
     let Server = new Promise((resolve, reject) => {
       serverCompiler.run((err, stat) => {
         let jsonStat = stat.toJson();
@@ -96,12 +84,38 @@ module.exports = function(program, config = {}) {
           : resolve();
       });
     });
+
+    // copy node_modules
+    let Copy = new Promise((resolve, reject) => {
+      try {
+        utils.exec(`cp ${dir}/package.json ${config.build.server.path}`, { cwd: cwd }, null, true);
+        resolve();
+      } catch (err) {
+        reject(err);
+      }
+    });
+
+
     Server.then(() => logger('SHIP: Webpack.Server:Success', 'green'));
+
+    // lets install production dependencies
+    Copy.then(() => {
+      utils.exec(
+        utils.makeCommand(cwd, 'install --production', [], ''), // command
+          { cwd: `${config.build.server.path}` }, // options
+          null,         // no callback
+          false,        // no sync
+          true          // print stdout
+      );
+    });
+
+    // add tasks
     tasks.push(Server);
+    tasks.push(Copy);
   }
 
   if (config.webpack.client) {
-    utils.exec(`mkdir ${dir}/dist/client`, { cwd: cwd }, null, true);
+    utils.exec(`mkdir mkdir ${config.build.client.path}`, { cwd: cwd }, null, true);
     let clientCompiler = webpack(clientConfig);
     let Client = new Promise((resolve, reject) => {
       clientCompiler.run((err, stat) => {
@@ -114,30 +128,9 @@ module.exports = function(program, config = {}) {
     Client.then(() => logger('SHIP: Webpack.Client:Success', 'green'));
     tasks.push(Client);
   }
-  
-  // copy node_modules
-  let Copy = new Promise((resolve, reject) => {
-    try {
-      utils.exec(`cp ${dir}/package.json ${dir}/dist/server`, { cwd: cwd }, null, true);
-      resolve();
-    } catch (err) {
-      reject(err);
-    }
-  });
-
-  // lets install production dependencies
-  Copy.then(() => {
-    utils.exec(
-      utils.makeCommand(cwd, 'install --production', [], ''), // command
-        { cwd: `${dir}/dist/server` }, // options
-        null,         // no callback
-        false,        // no sync
-        true          // print stdout
-    );
-  });
 
   // wrap steps to promise
-  Promise.all([...tasks, Copy])
+  Promise.all(tasks)
     .then(()    => logger('SHIP: Done', 'green'))
     .catch(err  => logger('SHIP: Error' + err, 'red'));
 };
