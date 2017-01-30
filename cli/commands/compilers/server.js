@@ -90,15 +90,10 @@ ServerCompiler.prototype.start = function(devScreen) {
 
     // processes content
     let worker = cluster.fork(
-      Object.assign(
-        {},
-        { NODE_ENV: 'development', NODE_PATH: `${dir}/node_modules` },
-        secrets
-      )
+      Object.assign({}, { NODE_ENV: 'development', NODE_PATH: `${dir}/node_modules` }, secrets)
     ).on('online', cb);
 
-    cluster.workers[worker.id].on('message', (msg) => {
-
+    cluster.workers[worker.id].on('message', msg => {
       let { data }  = msg;
       switch (msg.type) {
 

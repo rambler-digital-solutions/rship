@@ -17,6 +17,9 @@ const Compilers = {
  */
 module.exports = function(config) {
   if (cluster.isMaster) {
+    // get avaliable screens from blessed container
+    const Screen = devScreen(config);
+
     let ClientCompiler = false;
     let ServerCompiler = false;
 
@@ -28,9 +31,6 @@ module.exports = function(config) {
     if (config.webpack.server) {
       ServerCompiler = new Compilers.Server(config);
     }
-
-    // get avaliable screens from blessed container
-    const Screen = devScreen(config);
 
     // lets start both of compilers
     try {
@@ -50,10 +50,10 @@ module.exports = function(config) {
      * @param  {...[type]} data [description]
      * @return {[type]}         [description]
      */
-    let sendMessage = function(...data) {
+    let sendMessage = function() {
       let message = {
         type: this.type ? this.type : 'log',
-        data: data
+        data: arguments
       };
 
       if (process.connected) {
@@ -113,13 +113,10 @@ module.exports = function(config) {
           });
 
         // override stdout functions
-        process.stdout.write = function(msg) {
-          sendMessage.bind({ type: 'log' })(msg);
-        };
+        process.stdout.write = sendMessage.bind({ type: 'log' });
+
         // override stderr functions
-        process.stderr.write = function(msg) {
-          sendMessage.bind({ type: 'error' })(msg);
-        };
+        process.stderr.write = sendMessage.bind({ type: 'error' });
 
         // Run source code into new context
         script.runInNewContext({

@@ -129,13 +129,14 @@ const logFormat = data => {
 
   data.err
     ? formatedMessage = data.err.join('\n')
-    : formatedMessage = util.inspect(data, { showHidden: true, depth: 5 })
-  
+    : formatedMessage = Object.keys(data).map(key => {
+      return typeof data[key] === 'object'
+        ? util.inspect(data[key], { showHidden: true, depth: 5 })
+        : data[key];
+    }).join('\n' + ' '.repeat(9));
+
   return formatedMessage;
 };
-
-
-// util.inspect(msg.data, { showHidden: true, depth: 5 })
 
 // ======================
 // Export functions
