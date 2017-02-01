@@ -33,7 +33,7 @@ const cmd = function(program, config) {
       logger(`App will create at: ${dir}/${name}`);
 
       try {
-        utils.exec(`mkdir ${dir}/${name}`, { cwd: cwd }, true);
+        utils.exec(`mkdir ${dir}/${name}`, { cwd: cwd }, null, true);
       } catch (err) {
         logger(`Error: Folder '${dir}/${name}' is exists`, 'red');
         return;
@@ -48,7 +48,6 @@ const cmd = function(program, config) {
         ${utils.makeCommand(cwd)}
         `,           // command
         {cwd: dir},  // options,
-
         () => {
           logger('Instalation completed', 'green');
           logger(`Project folder: ${dir}/${name}`, 'green');
@@ -56,7 +55,6 @@ const cmd = function(program, config) {
         false,       // no sync
         true         // print
       );
-
     });
 };
 

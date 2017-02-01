@@ -8,7 +8,7 @@
  */
 const Registry = function(program, config, commands) {
   if (commands.length > 0) {
-    commands.forEach((command, key) => command(program, config));
+    commands.forEach(command => command(program, config));
   }
 
   return program;

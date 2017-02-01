@@ -12,7 +12,9 @@
     </div>
 
     <div class="logo">
-      <img src="https://rambler-digital-solutions.github.io/rship/styles/images/logo.svg" alt="">
+      <a href="https://github.com/rambler-digital-solutions/rship">
+        <img src="https://rambler-digital-solutions.github.io/rship/styles/images/logo.svg" alt="">
+      </a>
     </div>
 
     <div class="title">
@@ -20,25 +22,16 @@
     </div>
 
     <div class="inner">
-      <h1>Documentation</h1>
-      <ul class="languages">
-      {%  for lang in languages.list %}
-        <li><a href="{{ (lang.id + "/README.md")|contentURL }}">{{ lang.id }}</a></li>
-      {% endfor %}
-      </ul>
+      <a href="{{ ("en" + "/README.md")|contentURL }}"" class='link'>Documentation</a>
       <a href="https://www.npmjs.com/package/rship">
         <img src="https://badge.fury.io/js/rship.svg" alt="npm package">
       </a>
     </div>
 
     <div class="video">
-      <script type="text/javascript" src="https://asciinema.org/a/94353.js" id="asciicast-94353" async></script>
+      <script type="text/javascript" src="https://asciinema.org/a/117g7mc8edmxrbyckvh6qk2j9.js" id="asciicast-117g7mc8edmxrbyckvh6qk2j9" async></script>
     </div>
 
-
-    <footer>
-      Powered by <a href="http://rds.digital/" target="_blank">RDS</a>
-    </footer>
   </div>
 </div>
 {% endblock %}

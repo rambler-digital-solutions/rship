@@ -10,6 +10,8 @@ const Compilers = {
   Client: require('../compilers/client')
 };
 
+// const WebSocket = require('../websocket');
+
 /**
  * SHIP.run.dev
  * @param  {[type]} config [description]
@@ -17,10 +19,16 @@ const Compilers = {
  */
 module.exports = function(config) {
   if (cluster.isMaster) {
+    // // create websocket instance for handling compilation status
+    // const WebSocketInstance = new WebSocket({
+    //   host: config.development.websocket.host || 'localhost',
+    //   port: config.development.websocket.port || 3002
+    // });
+
     // create inctances of compilers in master process
     const ClientCompiler = new Compilers.Client(config);
     const ServerCompiler = new Compilers.Server(config);
-    
+
     // get avaliable screens from blessed container
     const Screen = devScreen(config);
 
@@ -31,9 +39,7 @@ module.exports = function(config) {
     } catch (err) {
       console.error(err);
     }
-
   } else {
-
     /**
      * Send message from child process to master
      * @param  {...[type]} data [description]
@@ -50,13 +56,13 @@ module.exports = function(config) {
       }
     };
 
-    // error handling section
-    process.on('exit',                data => { sendMessage.bind({ type: 'error' })(data); });
-    process.on('error',               data => { sendMessage.bind({ type: 'error' })(data); });
-    process.on('warning',             data => { sendMessage.bind({ type: 'warn'  })(data); });
-    process.on('unhandledRejection',  data => { sendMessage.bind({ type: 'error' })(data); });
-    process.on('rejectionHandled',    data => { sendMessage.bind({ type: 'error' })(data); });
-    process.on('uncaughtException',   data => { sendMessage.bind({ type: 'error' })(data); });
+    // error handling subscribe
+    ['exit', 'error', 'warning', 'unhandledRejection', 'rejectionHandled', 'uncaughtException']
+      .forEach(type => {
+        process.on(type, data => {
+          sendMessage.bind({ type: 'error' })(data);
+        });
+      });
 
     // process usage updater
     const interval = setInterval(function() {
@@ -64,9 +70,9 @@ module.exports = function(config) {
         type: 'tempo-worker-usage',
         data: {
           pid: process.pid,
-          memory: process.memoryUsage(),
           cpu: process.cpuUsage(),
           uptime: process.uptime(),
+          memory: process.memoryUsage(),
           connected: process.connected
         }
       };
@@ -83,28 +89,28 @@ module.exports = function(config) {
       try {
         // depends
         let vm = require('vm');
+        let console = {};
+
         // prepare new script context for execution
         let script = new vm.Script(sourceCode, {
+          timeout: 300,
           filename: 'server.js',
           lineOffset: 1,
           columnOffset: 1,
-          displayErrors: true,
-          timeout: 300
+          displayErrors: true
         });
 
         // override console context
-        let console = {
-          log: sendMessage.bind({ type: 'log' }),
-          error: sendMessage.bind({ type: 'error' }),
-          warn: sendMessage.bind({ type: 'warn' }),
-          info: sendMessage.bind({ type: 'info' })
-        };
+        ['log', 'dir', 'warn', 'info', 'error']
+          .forEach(type => {
+            console[type] = sendMessage.bind({ type });
+          });
 
         // Run source code into new context
         script.runInNewContext({
           module, console, require,
           process, __dirname, __filename,
-          setTimeout, setInterval, Error
+          setTimeout, setInterval, Error, global
         });
 
         // stop temporary process interval
@@ -122,17 +128,16 @@ module.exports = function(config) {
           let message = {
             type: 'active-worker-usage',
             data: {
+              cpu: usage,
               pid: process.pid,
               memory: process.memoryUsage(),
-              cpu: usage,
-              cpuPersents: userPercent,
               uptime: process.uptime(),
+              cpuPersents: userPercent,
               connected: process.connected
             }
           };
           process.send(message);
         }, 500);
-
       } catch (err) {
         let errorArr = err.stack.split('\n');
         let message = {

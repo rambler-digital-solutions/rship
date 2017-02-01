@@ -82,7 +82,6 @@ const checkInstance = (dir) => {
 };
 
 /**
- * 
  * @param  {[type]} cwd      [description]
  * @param  {String} command  [description]
  * @param  {Array}  packages [description]
@@ -93,7 +92,7 @@ const makeCommand = (cwd, command = '', packages = [], options = '') => {
   let opt = options;
   let pack = packages.join(' ');
   if (options) opt = opt.saveDev ? '--save-dev' : '--save';
-  return `${cwd}/node_modules/.bin/yarn ${command} ${pack} ${opt}`.trim();
+  return `NODE_PATH=${cwd} ${cwd}/node_modules/.bin/yarn ${command} ${pack} ${opt}`.trim();
 };
 
 /**

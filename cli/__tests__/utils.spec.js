@@ -61,9 +61,9 @@ describe('utils', () => {
 
   it('makeCommand()', () => {
     expect(utils.makeCommand(process.cwd())).to.be.a('string');
-    expect(utils.makeCommand(process.cwd())).to.equal(`${process.cwd()}/node_modules/.bin/yarn`);
-    expect(utils.makeCommand(process.cwd(), 'add', ['zero'], {save: true})).to.equal(`${process.cwd()}/node_modules/.bin/yarn add zero --save`);
-    expect(utils.makeCommand(process.cwd(), 'remove', ['zero'])).to.equal(`${process.cwd()}/node_modules/.bin/yarn remove zero`);
+    expect(utils.makeCommand(process.cwd())).to.equal(`NODE_PATH=${process.cwd()} ${process.cwd()}/node_modules/.bin/yarn`);
+    expect(utils.makeCommand(process.cwd(), 'add', ['zero'], {save: true})).to.equal(`NODE_PATH=${process.cwd()} ${process.cwd()}/node_modules/.bin/yarn add zero --save`);
+    expect(utils.makeCommand(process.cwd(), 'remove', ['zero'])).to.equal(`NODE_PATH=${process.cwd()} ${process.cwd()}/node_modules/.bin/yarn remove zero`);
   });
 
   it('exec()', () => {

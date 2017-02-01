@@ -5,7 +5,6 @@
 // ======================
 const colors = require('colors');
 const webpack = require('webpack');
-const childProcess = require('child_process');
 const logger = require('../../libs/logger');
 const utils  = require('../utils');
 
@@ -37,23 +36,26 @@ module.exports = function(program, config = {}) {
 
   // if config has minify option
   if (config.build.minify) {
-    let minifyServer = new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    });
+    let options = { compress: { warnings: true } };
+    let defineOptions = { 'process.env': { 'NODE_ENV': JSON.stringify('production') } };
 
-    let minifyClient = new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    });
+    let minifyServer = new webpack.optimize.UglifyJsPlugin(options);
+    let minifyClient = new webpack.optimize.UglifyJsPlugin(options);
 
+    let defineServerProduction = new webpack.DefinePlugin(defineOptions);
+    let defineClientProduction = new webpack.DefinePlugin(defineOptions);
+
+    // check plugins block
     serverConfig && !serverConfig.plugins ? serverConfig.plugins = [] : null;
     clientConfig && !clientConfig.plugins ? clientConfig.plugins = [] : null;
 
+    // push minify plugins to config
     serverConfig.plugins.push(minifyServer);
     clientConfig.plugins.push(minifyClient);
+
+    // push define production env
+    serverConfig.plugins.push(defineServerProduction);
+    clientConfig.plugins.push(defineClientProduction);
   }
 
   // prepare separated webpack instances
@@ -63,58 +65,58 @@ module.exports = function(program, config = {}) {
   // lets send user notice
   logger('SHIP: Start compiling');
   logger('SHIP: Remove old files', 'green');
-  
+
   // prepare folders for compiling
   utils.exec(`rm -rf ${dir}/dist`, { cwd: cwd }, null, true);
   utils.exec(`mkdir ${dir}/dist`, { cwd: cwd }, null, true);
+  utils.exec(`mkdir ${dir}/dist/server`, { cwd: cwd }, null, true);
+  utils.exec(`mkdir ${dir}/dist/client`, { cwd: cwd }, null, true);
 
-  // server compiler
   let Server = new Promise((resolve, reject) => {
-    logger('SHIP: Webpack.Server:Building...', 'green');
-    serverCompiler.run((err) => {
-      // build has errors
-      if (err) {
-        logger('SHIP: Webpack.Server:Error ' + JSON.stringify(err, '\n', 2), 'red');
-        reject(err);
-      }
-
-      logger('SHIP: Server has been compiled at ./dist/server', 'green');
-      resolve();
+    serverCompiler.run((err, stat) => {
+      let jsonStat = stat.toJson();
+      stat.hasErrors()
+        ? reject(jsonStat.errors)
+        : resolve();
     });
   });
 
-  // client compiler
   let Client = new Promise((resolve, reject) => {
-    logger('SHIP: Webpack.Client:Building...', 'green');
-    clientCompiler.run((err) => {
-      // build has errors
-      if (err) {
-        logger('SHIP: Webpack.Client:Error ' + JSON.stringify(err, '\n', 2), 'red');
-        reject(err);
-      }
-
-      logger('SHIP: Client has been compiled at ./dist/client', 'green');
-      resolve();
+    clientCompiler.run((err, stat) => {
+      let jsonStat = stat.toJson();
+      stat.hasErrors()
+        ? reject(jsonStat.errors)
+        : resolve();
     });
   });
 
   // copy node_modules
   let Copy = new Promise((resolve, reject) => {
     try {
-      utils.exec(`mkdir ${dir}/dist/server`, { cwd: cwd }, null, true);
-      utils.exec(`cp -r ${dir}/node_modules ${dir}/dist/server/node_modules/`, { cwd: cwd }, null, true);
+      utils.exec(`cp ${dir}/package.json ${dir}/dist/server`, { cwd: cwd }, null, true);
       resolve();
     } catch (err) {
       reject(err);
     }
   });
 
-  // wrap steps to promise
-  Promise.all([Server, Client, Copy]).then(() => {
-    try {
-      logger('SHIP: Done', 'green');
-    } catch (err) {
-      throw new Error(err);
-    }
+  // status checked
+  Server.then(() => logger('SHIP: Webpack.Server:Success', 'green'));
+  Client.then(() => logger('SHIP: Webpack.Client:Success', 'green'));
+
+  // lets install production dependencies
+  Copy.then(() => {
+    utils.exec(
+      utils.makeCommand(cwd, 'install --production', [], ''), // command
+        { cwd: `${dir}/dist/server` }, // options
+        null,         // no callback
+        false,        // no sync
+        true          // print stdout
+    );
   });
+
+  // wrap steps to promise
+  Promise.all([Server, Client, Copy])
+    .then(()    => logger('SHIP: Done', 'green'))
+    .catch(err  => logger('SHIP: Error' + err, 'red'));
 };

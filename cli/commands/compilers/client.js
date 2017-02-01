@@ -3,12 +3,14 @@
 // ======================
 // Depends
 // ======================
-const path      = require('path');
-const util      = require('util');
-const colors    = require('colors');
 const webpack   = require('webpack');
-const utils     = require('../utils');
 const DevServer = require('webpack-dev-server');
+
+// ======================
+// Utils
+// ======================
+const utils     = require('../utils');
+
 
 /**
  * Server Compiler
@@ -24,22 +26,12 @@ const ClientCompiler = function(config) {
  */
 ClientCompiler.prototype.start = function(devScreen) {
   // define local variables
-  const config        = this.config;
-  const { cwd }       = config;
+  const { config }    = this;
   const clientConfig  = require(config.webpack.client)(config);
   const compiler      = webpack(clientConfig);
 
   // get avaliable screens from blessed container
-  let { memoryBlock, cpuBlock, compilingBlock, activeProcessBlock, logsBlock, screen } = devScreen;
-
-  // add entry point for
-  clientConfig.entry.app
-    .unshift(
-      `${cwd}/node_modules/webpack-dev-server/client?http://` +
-        config.development.client.host + ':' +
-        config.development.client.port,
-      `${cwd}/node_modules/webpack/hot/only-dev-server`
-    );
+  let { logsBlock } = devScreen;
 
   // Add client public path. Exam => http://localhost:8090/assets/
   clientConfig.output.publicPath =
@@ -48,27 +40,24 @@ ClientCompiler.prototype.start = function(devScreen) {
   // dev server
   let server = new DevServer(compiler, {
     contentBase: config.build.client.path,
-    hot: true,
     inline: true,
     noInfo: true,
     quiet: true
   });
 
-  compiler.plugin('done', function(stats) {
+  compiler.plugin('done', stats => {
     let statistic = stats.toJson();
 
     if (stats.hasErrors()) {
       statistic.errors.forEach(error => {
         utils.log(logsBlock, 'SHIP: Webpack->Client->Error: ' + error, 'red');
       });
-      return false;
     }
 
     if (stats.hasWarnings()) {
       statistic.warnings.forEach(warn => {
         utils.log(logsBlock, 'SHIP: Webpack->Client->Warning: ' + warn, 'magenta');
       });
-      return false;
     } else {
       utils.log(logsBlock, 'SHIP: Webpack->Client->Hash: ' + statistic.hash, 'green');
     }

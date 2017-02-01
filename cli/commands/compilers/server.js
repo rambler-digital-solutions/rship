@@ -5,7 +5,6 @@
 // ======================
 const cluster   = require('cluster');
 const path      = require('path');
-const util      = require('util');
 const MemoryFS  = require('memory-fs');
 const colors    = require('colors');
 const webpack   = require('webpack');
@@ -24,8 +23,8 @@ const ServerCompiler = function(config) {
  * @return {[type]} [description]
  */
 ServerCompiler.prototype.start = function(devScreen) {
-  const config = this.config;
-  const { dir, cwd } = config;
+  const { config }    = this;
+  const { dir, cwd }  = config;
 
   // define mmemory fs
   let fs = new MemoryFS();
@@ -61,7 +60,7 @@ ServerCompiler.prototype.start = function(devScreen) {
 
     if (lastVersion > currentVersion ) {
       utils.log(logsBlock, `SHIP: Is outdated, current version is: ${currentVersion}, last version is: ${lastVersion}`, 'red');
-      utils.log(logsBlock, `SHIP: Please update @see https://rambler-digital-solutions.github.io/rship/en/parts/update.html`, 'red');
+      utils.log(logsBlock, 'SHIP: Please update @see https://rambler-digital-solutions.github.io/rship/en/parts/update.html', 'red');
     }
   });
 
@@ -76,6 +75,14 @@ ServerCompiler.prototype.start = function(devScreen) {
    * @return {[type]}      [description]
    */
   let createWorker = function(cb = function() {}) {
+    // define colors by message type
+    let messageTypesColors = {
+      log: 'yellow',
+      info: 'blue',
+      warn: 'magenta',
+      error: 'red'
+    };
+
     // processes content
     let worker = cluster.fork({
       NODE_ENV: 'development',
@@ -83,12 +90,17 @@ ServerCompiler.prototype.start = function(devScreen) {
     }).on('online', cb);
 
     cluster.workers[worker.id].on('message', (msg) => {
-      let { data } = msg;
+      let { data }  = msg;
       switch (msg.type) {
-        case 'error' : utils.log(logsBlock, `ERROR: ${utils.logFormat(data)}`, 'red'); break;
-        case 'log' : utils.log(logsBlock,   `LOG: ${utils.logFormat(data)}`, 'yellow'); break;
-        case 'warn' : utils.log(logsBlock,  `WARN: ${utils.logFormat(data)}`, 'magenta'); break;
-        case 'info' : utils.log(logsBlock,  `INFO: ${utils.logFormat(data)}`, 'blue'); break;
+
+        // some console messages
+        case 'log':
+        case 'warn':
+        case 'info':
+        case 'error':
+          utils.log( logsBlock, `${msg.type.toUpperCase()}: ${utils.logFormat(data)}`, messageTypesColors[msg.type] );
+          break;
+
         case 'active-worker-usage': {
           let memoryBoxContent = [
             `${colors.yellow('CPU')}: ${msg.data.cpuPersents.toFixed(2)}%`,
@@ -142,10 +154,9 @@ ServerCompiler.prototype.start = function(devScreen) {
         utils.log(logsBlock, 'SHIP: Webpack->Server->Warning: ' + warn, 'magenta');
       });
       return false;
-    } else {
-      utils.log(logsBlock, 'SHIP: Webpack->Server->Hash: ' + statistic.hash, 'green');
     }
 
+    utils.log(logsBlock, 'SHIP: Webpack->Server->Hash: ' + statistic.hash, 'green');
     utils.log(logsBlock, 'SHIP: Server compiled', 'green');
 
     if (fs.statSync(serverFile).isFile()) {
@@ -174,8 +185,6 @@ ServerCompiler.prototype.start = function(devScreen) {
     screen.render();
     return true;
   });
-
-
 };
 
 module.exports = ServerCompiler;

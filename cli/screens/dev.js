@@ -13,8 +13,7 @@ const colors = require('colors');
  * @param  {[type]} compiler [description]
  * @return {[type]}          [description]
  */
-module.exports = function(config = {}) {
-
+module.exports = function() {
   // Create a screen object.
   const screen = blessed.screen({
     smartCSR: true,

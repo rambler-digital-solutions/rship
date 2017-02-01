@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300');
 
+.asciicast {
+  margin: 0px !important;
+}
+
 .links {
   top: 20px;
   right: 20px;
@@ -10,6 +14,16 @@
   margin-left: 10px;
   width: 30px;
   height: 30px;
+}
+
+.link {
+  color: #fff;
+  font-size: 30px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 10px;
 }
 
 .logo {
@@ -110,3 +124,5 @@ footer a {
   color: #fff;
   text-decoration: underline;
 }
+
+
