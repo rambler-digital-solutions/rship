@@ -33,7 +33,7 @@ ServerCompiler.prototype.start = function(devScreen) {
   let serverConfig = require(config.webpack.server)(config);
 
   // push modules directories
-  serverConfig.resolve.modulesDirectories.push(`${cwd}/node_modules`);
+  serverConfig.resolve.modules.push(`${cwd}/node_modules`);
 
   // prepare separated webpack instances
   let serverCompiler = webpack(serverConfig);
@@ -59,8 +59,8 @@ ServerCompiler.prototype.start = function(devScreen) {
     }
 
     if (lastVersion > currentVersion ) {
-      utils.log(logsBlock, `SHIP: Is outdated, current version is: ${currentVersion}, last version is: ${lastVersion}`, 'red'); 
-      utils.log(logsBlock, `SHIP: Please update @see https://rambler-digital-solutions.github.io/rship/en/parts/update.html`, 'red'); 
+      utils.log(logsBlock, `SHIP: Is outdated, current version is: ${currentVersion}, last version is: ${lastVersion}`, 'red');
+      utils.log(logsBlock, 'SHIP: Please update @see https://rambler-digital-solutions.github.io/rship/en/parts/update.html', 'red');
     }
   });
 
@@ -90,7 +90,6 @@ ServerCompiler.prototype.start = function(devScreen) {
     }).on('online', cb);
 
     cluster.workers[worker.id].on('message', (msg) => {
-
       let { data }  = msg;
       switch (msg.type) {
 
@@ -155,10 +154,9 @@ ServerCompiler.prototype.start = function(devScreen) {
         utils.log(logsBlock, 'SHIP: Webpack->Server->Warning: ' + warn, 'magenta');
       });
       return false;
-    } else {
-      utils.log(logsBlock, 'SHIP: Webpack->Server->Hash: ' + statistic.hash, 'green');
     }
 
+    utils.log(logsBlock, 'SHIP: Webpack->Server->Hash: ' + statistic.hash, 'green');
     utils.log(logsBlock, 'SHIP: Server compiled', 'green');
 
     if (fs.statSync(serverFile).isFile()) {

@@ -10,7 +10,6 @@ const ws = require('nodejs-websocket');
  * @param {[type]} config [description]
  */
 const WebsocketServer = function(config) {
-
   // config
   this.config = config || {
     host: 'localhost',
@@ -21,7 +20,7 @@ const WebsocketServer = function(config) {
   this.server = ws.createServer(connection => {
     connection.on('error', err => {
       if (err.code !== 'ECONNRESET') {
-        throw err
+        throw err;
       }
     });
   }).listen(this.config.port);

@@ -35,8 +35,8 @@
     "commander": "2.9.0",
     "memory-fs": "0.4.1",
     "nodejs-websocket": "1.7.1",
-    "webpack": "1.14.0",
-    "webpack-dev-server": "1.16.2",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.2.1",
     "yarn": "0.19.1"
   },
   "devDependencies": {

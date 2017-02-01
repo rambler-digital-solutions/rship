@@ -103,7 +103,7 @@ module.exports = function(config) {
         // override console context
         ['log', 'dir', 'warn', 'info', 'error']
           .forEach(type => {
-            console[type] = sendMessage.bind({ type })
+            console[type] = sendMessage.bind({ type });
           });
 
         // Run source code into new context
