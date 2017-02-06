@@ -65,14 +65,7 @@ module.exports = (program, config = {}) => {
   return Promise.all(tasks)
     .then(
       stat => {
-        let command = utils.makeCommand(dir, 'install --production', [], '');
-        utils.exec(
-          command,
-          { cwd: `${config.build.server.path}` }, // options
-          null,         // no callback
-          null,        // no sync
-          true          // print stdout
-        );
+        logger('SHIP: Done', 'green');
       },
       error => {
         throw new Error(error);
