@@ -34,9 +34,6 @@ if (process.versions.node.split('.').join('') <  config.requirments.node.split('
   process.exit(0);
 }
 
-// rewrite
-config.cwd = process.cwd();
-
 // ======================
 // Initialize CLI
 // ======================
