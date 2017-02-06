@@ -1,6 +1,6 @@
 {
   "name": "rship",
-  "version": "1.0.17",
+  "version": "2.0.0-alpha",
   "description": "Ecosystem for building isomorphic web applications",
   "main": "./cli/index.js",
   "bin": {
@@ -34,9 +34,8 @@
     "colors": "1.1.2",
     "commander": "2.9.0",
     "memory-fs": "0.4.1",
-    "nodejs-websocket": "1.7.1",
-    "webpack": "1.14.0",
-    "webpack-dev-server": "1.16.2",
+    "webpack": "2.2.1",
+    "webpack-dev-server": "2.3.0",
     "yarn": "0.19.1"
   },
   "devDependencies": {

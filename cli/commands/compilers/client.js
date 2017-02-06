@@ -43,8 +43,6 @@ ClientCompiler.prototype.start = function(devScreen) {
   let server = new DevServer(compiler, {
     contentBase: config.build.client.path,
     inline: true,
-    colors: true,
-    info: false,
     quiet: true
   });
 

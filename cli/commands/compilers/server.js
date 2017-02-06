@@ -38,7 +38,7 @@ ServerCompiler.prototype.start = function(devScreen) {
   let serverConfig = require(config.webpack.server)(config);
 
   // push modules directories
-  serverConfig.resolve.modulesDirectories.push(`${cwd}/node_modules`);
+  serverConfig.resolve.modules.push(`${cwd}/node_modules`);
 
   // prepare separated webpack instances
   let serverCompiler = webpack(serverConfig);
