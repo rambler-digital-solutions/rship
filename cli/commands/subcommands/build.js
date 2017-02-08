@@ -68,7 +68,7 @@ module.exports = (program, config = {}) => {
         logger('SHIP: Done', 'green');
       },
       error => {
-        throw new Error(error);
+        console.error(error);
         process.exit(1);
       }
     );

@@ -1,6 +1,6 @@
 {
   "name": "rship",
-  "version": "2.0.1-alpha",
+  "version": "2.0.2-alpha",
   "description": "Ecosystem for building isomorphic web applications",
   "main": "./cli/index.js",
   "bin": {
