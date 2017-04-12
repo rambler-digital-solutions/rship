@@ -21,6 +21,8 @@ const cmd = function(program, config) {
     .action(function(name, preset = 'react-redux-boilerplate') {
       let presetUrl;
       const { dir, cwd } = config;
+      const isNameExists = name !== undefined;
+      const dirPath = isNameExists ? `${dir}/${name}` : dir;
 
       // get preset
       if (config.generator[preset]) {
@@ -30,18 +32,20 @@ const cmd = function(program, config) {
         return;
       }
 
-      logger(`App will create at: ${dir}/${name}`);
+      logger(`App will create at: ${dirPath}`);
 
-      try {
-        utils.exec(`mkdir ${dir}/${name}`, { cwd: cwd }, null, true);
-      } catch (err) {
-        logger(`Error: Folder '${dir}/${name}' is exists`, 'red');
-        return;
+      if (isNameExists) {
+        try {
+          utils.exec(`mkdir ${dirPath}`, { cwd: cwd }, null, true);
+        } catch (err) {
+          logger(`Error: Folder '${dirPath}' is exists`, 'red');
+          return;
+        }
       }
 
       utils.exec(
         `
-        cd ${dir}/${name} &&
+        cd ${dirPath} &&
         curl -LOk ${presetUrl} &&
         tar -xzf master.tar.gz --strip-components=1 -C ./ &&
         rm master.tar.gz
@@ -49,7 +53,7 @@ const cmd = function(program, config) {
         `,           // command
         {cwd: dir},  // options,
         () => {
-          logger('Instalation completed', 'green');
+          logger('Installation completed', 'green');
           logger(`Project folder: ${dir}/${name}`, 'green');
         },           // callback
         false,       // no sync
