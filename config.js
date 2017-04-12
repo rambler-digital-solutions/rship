@@ -1,5 +1,7 @@
 'use strict';
 
+const deepmerge = require('deepmerge');
+
 /**
  * Simple is object check.
  * @param  {Object} item
@@ -7,27 +9,6 @@
  */
 const isObject = item => {
   return (item && typeof item === 'object' && !Array.isArray(item) && item !== null);
-};
-
-/**
- * Deep merge two objects.
- * @param  {object} target [description]
- * @param  {object} source [description]
- * @return {object}        [description]
- */
-const mergeDeep = (target, source) => {
-  if (isObject(target) && isObject(source)) {
-    for (const key in source) {
-      if (isObject(source[key])) {
-        if (!target[key]) Object.assign(target, { [key]: {} });
-        mergeDeep(target[key], source[key]);
-      } else {
-        Object.assign(target, { [key]: source[key] });
-      }
-    }
-  }
-
-  return target;
 };
 
 
@@ -109,10 +90,9 @@ module.exports = function(__CWD, __ROOT, __ENV) {
     }
   };
 
-  return mergeDeep(config, applicationConfig);
+  return deepmerge(config, applicationConfig);
 };
 
 // export testable function
 module.exports.isObject = isObject;
-module.exports.mergeDeep = mergeDeep;
 

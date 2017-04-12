@@ -32,9 +32,13 @@ module.exports = (program, config = {}) => {
     let WebpackConfig = require(file)(config);
 
     if (config.build.minify) {
+      const uglifyConfig = typeof(config.build.minify) === 'boolean'
+        ? {compress: {warnings: true}}
+        : config.build.minify;
+
       WebpackConfig && !WebpackConfig.plugins ? WebpackConfig.plugins = [] : null;
       WebpackConfig.plugins.push(
-        new webpack.optimize.UglifyJsPlugin({ compress: { warnings: true } })
+        new webpack.optimize.UglifyJsPlugin(uglifyConfig)
       );
 
       logger(`SHIP: '${type}' source will be minify`, 'yellow');
