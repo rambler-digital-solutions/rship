@@ -30,12 +30,12 @@ const cmd = function(program, config) {
         return;
       }
 
-      logger(`App will create at: ${dir}/${name}`);
+      logger(`App will be created in: ${dir}/${name}`);
 
       try {
         utils.exec(`mkdir ${dir}/${name}`, { cwd: cwd }, null, true);
       } catch (err) {
-        logger(`Error: Folder '${dir}/${name}' is exists`, 'red');
+        logger(`Error: Folder '${dir}/${name}' exists`, 'red');
         return;
       }
 
@@ -49,7 +49,7 @@ const cmd = function(program, config) {
         `,           // command
         {cwd: dir},  // options,
         () => {
-          logger('Instalation completed', 'green');
+          logger('Installation completed', 'green');
           logger(`Project folder: ${dir}/${name}`, 'green');
         },           // callback
         false,       // no sync
