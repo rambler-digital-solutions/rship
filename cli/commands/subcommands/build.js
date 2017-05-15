@@ -23,7 +23,7 @@ module.exports = (program, config = {}) => {
     `
       rm -rf ${config.build.path} && 
       mkdir ${config.build.path} &&
-      mkdir ${config.build.server.path} &&
+      mkdir -p ${config.build.server.path} &&
       cp ${dir}/package.json ${config.build.server.path}
     `, { cwd: cwd }, true, true);
 
