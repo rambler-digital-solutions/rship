@@ -43,7 +43,11 @@ ClientCompiler.prototype.start = function(devScreen) {
   let server = new DevServer(compiler, {
     contentBase: config.build.client.path,
     inline: true,
-    quiet: true
+    quiet: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+    }
   });
 
   compiler.plugin('done', stats => {
